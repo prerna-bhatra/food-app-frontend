@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Outlet } from 'react-router';
 
 import logo from "./logo.svg";
@@ -34,7 +34,13 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
           <Route element={<WithNavbar />}>
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" element={
+              token ? (
+                <Profile />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
           </Route>
         </Routes>
       </Router>

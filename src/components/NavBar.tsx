@@ -10,9 +10,6 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false); // State to manage dropdown visibility
   const { token, user } = useSelector((state: any) => state.auth);
 
-  console.log({ token });
-
-
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -36,20 +33,25 @@ const Navbar: React.FC = () => {
               <img width={60} src={"https://static.vecteezy.com/system/resources/previews/014/300/816/original/motorbike-for-food-delivery-service-online-ordering-concept-png.png"} />
             </span>
           </button>
-          <div className="relative">
-            <button className="text-white font-bold flex items-center space-x-1" onClick={() => setIsOpen(!isOpen)}>
-              <span>Current Location:</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
+          {
+            token ? (
+              <div className="relative">
+                <button className="text-white font-bold flex items-center space-x-1" onClick={() => setIsOpen(!isOpen)}>
+                  <span>Current Location:</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                  </svg>
+                </button>
 
-            {isOpen && (
-              <div className="absolute top-full left-0 bg-white shadow mt-2 ml-[100px] mt-5">
-                <Location />
+                {isOpen && (
+                  <div className="absolute top-full left-0 bg-white shadow mt-2 ml-[100px] mt-5">
+                    <Location />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            ) : null
+          }
+
         </div>
 
 
