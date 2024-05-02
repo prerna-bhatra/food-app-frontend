@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { createUserAddress } from '../services/userService';
 
 interface FormData {
     addressType: string;
@@ -14,6 +16,8 @@ interface FormData {
 
 
 const AddressForm = (props: any) => {
+    const { token } = useSelector((state: any) => state.auth);
+
     const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
 
     useEffect(() => {
@@ -21,8 +25,15 @@ const AddressForm = (props: any) => {
     }, [props])
 
     const onSubmit: SubmitHandler<FormData> = (data: any) => {
-        console.log(data);
-        // You can submit the form data to your backend or perform other actions here
+        console.log({data }, {lat:props.latitude , long:props.longitude});
+        createUserAddress({ ...data, latitude: props.latitude, longitude: props.longitude } , token).
+        then((response)=>{
+            console.log({response});
+            
+        }).catch((error)=>{
+            console.log({error});
+            
+        })
     };
 
     return (
@@ -43,22 +54,22 @@ const AddressForm = (props: any) => {
                 </div>
                 <div className="mb-4">
                     <input disabled={true} type="text" {...register("googleAddress", { required: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                    {errors.googleAddress && <span>This field is required</span>}
+                    {/* {errors.googleAddress && <span className='text-red-400'>House/Flat details is required</span>} */}
                 </div>
                 <div className="mb-4">
                     <input placeholder='House/Flat' type="text" {...register("houseName", { required: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                    {errors.houseName && <span>This field is required</span>}
+                    {errors.houseName && <span className='text-red-400'>House/Flat details is required</span>}
                 </div>
                 <div className="mb-4">
                     <input placeholder='Area/Street' type="text" {...register("area", { required: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                    {errors.area && <span>This field is required</span>}
+                    {errors.area && <span className='text-red-400'>Area  is required</span>}
                 </div>
                 <div className="mb-4">
                     <input placeholder='Landmark(optional)' type="text" {...register("landMark")} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                 </div>
                 <div className="mb-4">
                     <input placeholder='Receiver Contact' type="text" {...register("receiverContact", { required: true })} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                    {errors.receiverContact && <span>This field is required</span>}
+                    {errors.receiverContact && <span className='text-red-400'>Contact number is required</span>}
                 </div>
                 <button type="submit">Submit</button>
             </form>

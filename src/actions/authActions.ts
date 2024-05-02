@@ -3,6 +3,8 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
+export const UPDATE_USER_NAME = 'UPDATE_USER_NAME';
+
 
 
 interface IUserInfo {
@@ -24,6 +26,11 @@ export const loginSuccess = (user: any) => ({
 export const loginFailure = (error: string) => ({
   type: LOGIN_FAILURE,
   payload: error
+});
+
+export const updateUserNameAction = (user: string) => ({
+  type: UPDATE_USER_NAME,
+  payload: user
 });
 
 

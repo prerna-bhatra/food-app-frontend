@@ -4,24 +4,42 @@ import MapComponent from './MapComponent';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AddressForm from './AddressForm';
 import { BiArrowBack } from 'react-icons/bi';
+import { userSavedAddress } from '../services/userService';
 
 
 const Location = () => {
+    const { token } = useSelector((state: any) => state.auth);
 
     const [searchInput, setSearchInput] = useState('');
+    const [loading, setLoading] = useState(false);
     const [currentLocation, setCurrentLocation] = useState<{ latitude: number, longitude: number } | null>(null);
-    const [addresses, setAddresses] = useState<{ addressType: string, address: string }[]>([]);
+    const [addresses, setAddresses] = useState<{
+        addressType: string,
+        googleAddress: string,
+        id: number,
+        landMark: string,
+        receiverContact: string,
+        houseName: string,
+        longitude: number,
+        latitude: number,
+        area: string
+    }[]>([]);
     const [locationAddress, setLocationAddress] = useState<string>('')
 
     useEffect(() => {
-        const dummyAddresses = [
-            { addressType: 'Home', address: '23 Main Street, Anytown, USA 12345:' },
-            { addressType: 'Work', address: '23 Main Street, Anytown, USA 12345:' },
-            { addressType: 'Other', address: '23 Main Street, Anytown, USA 12345:' }
-        ];
-        setAddresses(dummyAddresses);
+        fetchSavedAddress()
     }, []);
 
+
+    const fetchSavedAddress = async () => {
+        setLoading(true)
+        userSavedAddress(token).then((response: any) => {
+            setLoading(false)
+            setAddresses(response.data);
+        }).catch((error) => {
+
+        })
+    }
     const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(e.target.value);
     };
@@ -32,7 +50,7 @@ const Location = () => {
     };
 
     const fetchAddress = async (latitude: number, longitude: number): Promise<string | null> => {
-        const API_KEY = 'AIzaSyCL_QSk4NjKCD376dCE3LM93zIkn234Yrs';
+        const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`;
 
         try {
@@ -57,7 +75,6 @@ const Location = () => {
                     const { latitude, longitude } = position.coords;
                     setCurrentLocation({ latitude, longitude });
                     const locationAddress = await fetchAddress(latitude, longitude) || '';
-                    console.log({ locationAddress });
                     setLocationAddress(locationAddress)
                 },
                 (error) => {
@@ -91,31 +108,35 @@ const Location = () => {
                         />
                         <button onClick={handleUseCurrentLocation} className="bg-blue-500 text-white px-4 py-2 rounded w-full">Detect Current Location</button></>
                 ) : null
-
-
             }
             {currentLocation && (
                 <>
-                    <BiArrowBack cursor="pointer" onClick={()=>{
-                        
-                    }}/>
+                    <BiArrowBack cursor="pointer" onClick={() => {
+                       setCurrentLocation(null)
+                    }} />
                     <MapComponent latitude={currentLocation.latitude} longitude={currentLocation.latitude} />
-                    <AddressForm locationAddress={locationAddress} />
+                    <AddressForm locationAddress={locationAddress} latitude={currentLocation.latitude} longitude={currentLocation.latitude} />
                 </>
 
             )}
-            {!currentLocation && addresses.length > 0 && (
+            {!currentLocation && addresses&& addresses.length > 0 && (
                 <div className="mt-4 border border-gray-300">
                     <h3 className="text-lg text-gray-400">Saved Addresses:</h3>
                     <ul className="pl-6 mt-2">
-                        {addresses.map((address: { addressType: string, address: string }, index: number) => (
+                        {addresses.map((address: any, index: number) => (
                             <li key={index} className="mb-1">
                                 <div className="flex items-start">
                                     <span className="mr-2">{addressTypeIcons[address.addressType]}</span>
                                     <span className="font-bold">{address.addressType}</span>
                                 </div>
                                 <div >
-                                    <div>{address.address}</div>
+                                    <div>
+                                        {address.houseName+", "}
+                                        {address.area +", "}
+                                        {address.landmark + address.landmark?", ":""}
+                                        {address.googleAddress}
+
+                                    </div>
                                 </div>
                             </li>
                         ))}

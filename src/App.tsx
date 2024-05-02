@@ -11,12 +11,17 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import WithNavbar from "./components/WithNavbar";
 import WithoutNavbar from "./components/WithoutNavbar";
+import 'react-toastify/dist/ReactToastify.css';
+import Profile from "./components/Profile";
+import { useSelector } from "react-redux";
+
 
 function App() {
+  const { token, user } = useSelector((state: any) => state.auth);
+
   return (
     <div className="App">
       <Router>
-        {/* <Navbar /> */}
         <Routes>
           <Route element={<WithNavbar />}>
             <Route path="/login" element={<Login />} />
@@ -27,6 +32,9 @@ function App() {
 
           <Route element={<WithNavbar />}>
             <Route path="/" element={<Home />} />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
       </Router>

@@ -16,10 +16,11 @@ const MapComponent = (props: any) => {
         lat: props.latitude,
         lng: props.longitude
     };
+    const apiKEy: string = process.env.REACT_APP_GOOGLE_API_KEY || ''    
     return (
         <div className='mt-4 ml-3'>
 
-            <LoadScript googleMapsApiKey="AIzaSyCL_QSk4NjKCD376dCE3LM93zIkn234Yrs">
+            <LoadScript googleMapsApiKey={apiKEy}>
                 <GoogleMap
                     mapContainerStyle={containerStyle}
                     center={center}

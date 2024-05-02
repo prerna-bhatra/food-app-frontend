@@ -1,5 +1,5 @@
 // reducers/authReducer.ts
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT  } from '../actions/authActions';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT, UPDATE_USER_NAME  } from '../actions/authActions';
 
 interface AuthState {
   isLoading: boolean;
@@ -43,6 +43,14 @@ const authReducer = (state = initialState, action: any): AuthState => {
         isAuthenticated: false,
         user: null,
         error: action.payload
+      };
+      case UPDATE_USER_NAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: action.payload,
+        },
       };
       case LOGOUT:
         return {
