@@ -5,6 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import AddressForm from './AddressForm';
 import { BiArrowBack } from 'react-icons/bi';
 import { userSavedAddress } from '../services/userService';
+import { FaSpinner } from 'react-icons/fa';
+import SeacrhAddress from './SeacrhAddress';
 
 
 const Location = () => {
@@ -25,6 +27,8 @@ const Location = () => {
         area: string
     }[]>([]);
     const [locationAddress, setLocationAddress] = useState<string>('')
+
+    const [isSearchAddress , setIsSearchAddress] = useState(false);
 
     useEffect(() => {
         fetchSavedAddress()
@@ -92,7 +96,12 @@ const Location = () => {
     };
 
 
+    const handleFormSubmission = () => {
+        console.log("handleFormSubmission ");
 
+        setCurrentLocation(null);
+        fetchSavedAddress();
+    }
 
     return (
         <div className="bg-white rounded shadow p-4 w-[400px]">
@@ -112,38 +121,57 @@ const Location = () => {
             {currentLocation && (
                 <>
                     <BiArrowBack cursor="pointer" onClick={() => {
-                       setCurrentLocation(null)
+                        setCurrentLocation(null)
                     }} />
                     <MapComponent latitude={currentLocation.latitude} longitude={currentLocation.latitude} />
-                    <AddressForm locationAddress={locationAddress} latitude={currentLocation.latitude} longitude={currentLocation.latitude} />
+                    <AddressForm
+                        onFormSubmit={handleFormSubmission}
+                        locationAddress={locationAddress} latitude={currentLocation.latitude} longitude={currentLocation.latitude} />
                 </>
 
             )}
-            {!currentLocation && addresses&& addresses.length > 0 && (
-                <div className="mt-4 border border-gray-300">
-                    <h3 className="text-lg text-gray-400">Saved Addresses:</h3>
-                    <ul className="pl-6 mt-2">
-                        {addresses.map((address: any, index: number) => (
-                            <li key={index} className="mb-1">
-                                <div className="flex items-start">
-                                    <span className="mr-2">{addressTypeIcons[address.addressType]}</span>
-                                    <span className="font-bold">{address.addressType}</span>
-                                </div>
-                                <div >
-                                    <div>
-                                        {address.houseName+", "}
-                                        {address.area +", "}
-                                        {address.landmark + address.landmark?", ":""}
-                                        {address.googleAddress}
 
-                                    </div>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+            {!currentLocation && addresses && addresses.length > 0 && (
+                <div className="mt-4 border border-gray-300">
+                    {
+                        !loading ? (
+                            <>
+                                <h3 className="text-lg text-gray-400">Saved Addresses:</h3>
+                                <ul className="pl-6 mt-2">
+                                    {addresses.map((address: any, index: number) => (
+                                        <li key={index} className="mb-1 cursor-pointer" >
+                                            <div className="flex items-start">
+                                                <span className="mr-2">{addressTypeIcons[address.addressType]}</span>
+                                                <span className="font-bold">{address.addressType}</span>
+                                            </div>
+                                            <div >
+                                                <div>
+                                                    {address.houseName + ", "}
+                                                    {address.area + ", "}
+                                                    {address.landmark + address.landmark ? ", " : ""}
+                                                    {address.googleAddress}
+
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </>
+                        ) : (
+                            <FaSpinner className='text-black-900' />
+                        )
+                    }
+
                 </div>
 
             )}
+
+
+            {
+                isSearchAddress && currentLocation ?(
+                    <SeacrhAddress />
+                ):null
+            }
         </div>
     );
 };
