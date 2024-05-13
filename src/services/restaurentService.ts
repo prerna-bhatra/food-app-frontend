@@ -15,6 +15,8 @@ export const registerRestaurent = async (formData: any ,token:string) => {
     }
 }
 
+
+
 export const myRestaurants = async (token:string) => {
     try {
         const response = await axiosInstance.get(`/restaurant/my-restaurants`, {
@@ -33,7 +35,7 @@ export const myRestaurants = async (token:string) => {
 
 export const myRestaurantById = async (token:string , restaurantId:number) => {
     try {
-        const response = await axiosInstance.get(`/restaurant/myRestaurantById/${restaurantId}`, {
+        const response = await axiosInstance.get(`/restaurant/my-restaurant/${restaurantId}`, {
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
@@ -67,6 +69,21 @@ export const imageOrDocumentUploadRestaurant = async (token:string , formData:an
 export const verificationDetailsAddOrUpdate = async (token:string , formData:any , restaurentId:number) => {    
     try {
         const response = await axiosInstance.post(`/restaurant/verification-details/${restaurentId}`,formData, {
+            headers:{
+                'Authorization': `Bearer ${token}`,            }
+        });
+        console.log({ response });
+        return { data: response.data, status: response.status }
+
+    } catch (error) {
+        console.error('Error during :', error);
+        return {error}
+    }
+}
+
+export const updateRestaurantRegistration = async (token:string , formData:any , restaurentId:number) => {    
+    try {
+        const response = await axiosInstance.post(`/restaurant/update-registration-details/${restaurentId}`,formData, {
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });

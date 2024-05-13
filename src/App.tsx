@@ -18,6 +18,7 @@ import RegisterRestaurantForm from "./components/RegisterRestaurantForm";
 import MyRestaurent from "./components/MyRestaurent";
 import RestaurantDocumentForm from "./components/RestaurantDocumentForm";
 import MyExistingRestaurant from "./components/MyExistingRestaurant";
+import AnimationScreen from "./components/AnimationScreen";
 
 
 function App() {
@@ -77,6 +78,15 @@ function App() {
             <Route path="/existing-restuarents" element={
               token ? (
                 <MyRestaurent />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/ani" element={
+              token ? (
+                <AnimationScreen />
               ) : (
                 <Navigate to="/" replace />
               )

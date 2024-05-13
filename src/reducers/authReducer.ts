@@ -17,9 +17,7 @@ const initialState: AuthState = {
   token:null
 };
 
-const authReducer = (state = initialState, action: any): AuthState => {
-  console.log({action , state});
-  
+const authReducer = (state = initialState, action: any): AuthState => {  
   switch (action.type) {
     case LOGIN_REQUEST:
       return {

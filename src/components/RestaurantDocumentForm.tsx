@@ -9,12 +9,11 @@ import { ToastContainer, toast } from 'react-toastify';
 const RestaurantDocumentForm = () => {
     const { token } = useSelector((state: any) => state.auth);
     const { register, handleSubmit, formState: { errors }, setValue } = useForm();
-    const navigation = useNavigate();
-    const location = useLocation();
-    console.log({ location });
+    const navigate = useNavigate();
+    const location: any = useLocation();
+    const restaurantId = location?.state?.id
 
     useEffect(() => {
-        
         if (location && location.state && location.state.verfificationDetail) {
             setValue("panCardNumber", location.state.verfificationDetail.panCardNumber);
             setValue("panCardName", location.state.verfificationDetail.panCardName)
@@ -28,14 +27,12 @@ const RestaurantDocumentForm = () => {
     }, [])
 
     const onSubmit = async (data: any) => {
-        console.log(data);
-
         const requestData = {
             panNumber: data.panCardNumber,
             panCardName: data.panCardName,
             panCardAddress: data.panCardAddress,
             bankAccountNumber: data.bankAccountNumber,
-            bankAccountType: data.bankAccountNumber,
+            bankAccountType: data.accountType,
             ifscCode: data.ifscCode,
             fssaiNumber: data.fssaiNumber,
             fssaiExpiryDate: data.fssaiExpiryDate
@@ -46,8 +43,9 @@ const RestaurantDocumentForm = () => {
             toast.error(updateVerfificationDetailsResponse.error.message)
         }
 
-        if (updateVerfificationDetailsResponse.status === 200) {
-            toast.success("Succefully added  verfification details")
+        if (updateVerfificationDetailsResponse.status >= 200 || updateVerfificationDetailsResponse.status <= 210) {
+            toast.success("Succefully added  verfification details");
+            navigate("/my-restaurants")
         }
         else {
             toast.error(updateVerfificationDetailsResponse.message)
@@ -79,7 +77,7 @@ const RestaurantDocumentForm = () => {
         <div className="md:flex justify-center items-center  ">
             <ToastContainer />
             <div className="w-full md:w-1/2">
-                <div className="mb-8">
+                <div className="mb-8 h-full">
                     <h2 className="text-2xl font-bold mb-4">Steps</h2>
                     {/* Add steps here */}
                 </div>
@@ -88,7 +86,10 @@ const RestaurantDocumentForm = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 shadow-md rounded-md">
                     <div className="mb-8">
                         <h2 className="text-2xl font-bold mb-4">PAN Card Details</h2>
-                        <input {...register('panCardNumber', { required: true, pattern: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i })} type="text" placeholder="PAN Card Number" className="border rounded px-4 py-2 w-full mb-2" />
+                        <input
+                            {...register('panCardNumber', { required: true, pattern: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/i })}
+                            type="text" placeholder="PAN Card Number"
+                            className="border rounded px-4 py-2 w-full mb-2" />
                         {errors.panCardNumber && <span className="text-red-500">Invalid PAN Card Number</span>}
                         <input {...register('panCardName', { required: true })} type="text" placeholder="PAN Card Name" className="border rounded px-4 py-2 w-full mb-2" />
                         {errors.panCardName && <span className="text-red-500">PAN Card Name is required</span>}
@@ -136,9 +137,17 @@ const RestaurantDocumentForm = () => {
                         {errors.ifscCode && <span className="text-red-500">IFSC Code is required</span>}
                     </div>
                     <div className="flex justify-center">
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Next</button>
+                        <button type="button"
+                            onClick={() => {
+                                navigate("/partner-with-us", {
+                                    state: { resId: restaurantId }
+                                })
+                            }}
+                            className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Back</button>
+                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Save</button>
                     </div>
                 </form>
+
             </div>
         </div>
     );

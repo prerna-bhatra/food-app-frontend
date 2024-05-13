@@ -19,12 +19,10 @@ const MyExistingRestaurant = () => {
             toast.error(response.error.message)
         }
 
-        if (response.status === 200) {
+        if (response.status === 200 ) {
             setMyRestaurantList(response.data.restaurants)
         }
-
     }
-
 
     const goToUpdateRestaurant=(resId:number)=>{
         naviugate("/partner-with-us",{
