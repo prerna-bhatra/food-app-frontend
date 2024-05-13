@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { S3Uploader } from '../services/awsService';
 import { useSelector } from 'react-redux';
 import { imageOrDocumentUploadRestaurant, verificationDetailsAddOrUpdate } from '../services/restaurentService';
 import { ToastContainer, toast } from 'react-toastify';
