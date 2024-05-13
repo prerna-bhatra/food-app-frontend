@@ -14,6 +14,10 @@ import WithoutNavbar from "./components/WithoutNavbar";
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from "./components/Profile";
 import { useSelector } from "react-redux";
+import RegisterRestaurantForm from "./components/RegisterRestaurantForm";
+import MyRestaurent from "./components/MyRestaurent";
+import RestaurantDocumentForm from "./components/RestaurantDocumentForm";
+import MyExistingRestaurant from "./components/MyExistingRestaurant";
 
 
 function App() {
@@ -37,6 +41,42 @@ function App() {
             <Route path="/profile" element={
               token ? (
                 <Profile />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/partner-with-us" element={
+              token ? (
+                <RegisterRestaurantForm />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/partner-with-us-documents" element={
+              token ? (
+                <RestaurantDocumentForm />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/my-restaurants" element={
+              token ? (
+                <MyExistingRestaurant />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/existing-restuarents" element={
+              token ? (
+                <MyRestaurent />
               ) : (
                 <Navigate to="/" replace />
               )

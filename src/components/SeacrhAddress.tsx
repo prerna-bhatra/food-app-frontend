@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const SeacrhAddress = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+const SeacrhAddress = (props: any) => {
+
+    useEffect(() => {
+            
+    }, [props])
+
+    return (
+        <div>
+
+        </div>
+    )
 }
 
 export default SeacrhAddress

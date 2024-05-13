@@ -7,7 +7,8 @@ import { BiArrowBack } from 'react-icons/bi';
 import { userSavedAddress } from '../services/userService';
 import { FaSpinner } from 'react-icons/fa';
 import SeacrhAddress from './SeacrhAddress';
-
+import  GooglePlacesAutocomplete  from 'react-google-autocomplete';
+import { fetchAddress } from '../services/googleApiService';
 
 const Location = () => {
     const { token } = useSelector((state: any) => state.auth);
@@ -53,25 +54,6 @@ const Location = () => {
         setSearchInput('');
     };
 
-    const fetchAddress = async (latitude: number, longitude: number): Promise<string | null> => {
-        const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data.status === 'OK' && data.results && data.results.length > 0) {
-                return data.results[0].formatted_address;
-            } else {
-                console.error('No address found for the provided latitude and longitude.');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error fetching address:', error);
-            return null;
-        }
-    };
-
     const handleUseCurrentLocation = async () => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -79,7 +61,7 @@ const Location = () => {
                     const { latitude, longitude } = position.coords;
                     setCurrentLocation({ latitude, longitude });
                     const locationAddress = await fetchAddress(latitude, longitude) || '';
-                    setLocationAddress(locationAddress)
+                    setLocationAddress(locationAddress.formatted_address)
                 },
                 (error) => {
                     console.log({ error });
@@ -89,6 +71,7 @@ const Location = () => {
         } else {
         }
     };
+    
     const addressTypeIcons: { [key: string]: string } = {
         Home: '🏠',
         Work: '💼',
@@ -108,13 +91,13 @@ const Location = () => {
             {
                 !currentLocation ? (
                     <>
-                        <input
+                        {/* <input
                             type="text"
                             value={searchInput}
                             onChange={handleSearchInputChange}
                             placeholder="Search locations"
                             className="border border-gray-300 rounded px-4 py-2 mr-2 focus:outline-none focus:border-blue-500 mb-2 w-full"
-                        />
+                        /> */}
                         <button onClick={handleUseCurrentLocation} className="bg-blue-500 text-white px-4 py-2 rounded w-full">Detect Current Location</button></>
                 ) : null
             }

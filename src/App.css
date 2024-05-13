@@ -29,8 +29,13 @@
 }
 
 .nav-bar{
-  background-image: url('https://www.shutterstock.com/image-photo/thai-traditional-food-pad-dry-260nw-1079365445.jpg');
+  background-image: url('https://png.pngtree.com/background/20230413/original/pngtree-food-western-steak-delicious-background-picture-image_2422694.jpg');
   background-size: cover; /* Adjust background size as needed */
+  
+}
+
+.main-nav-bar{
+ background-color:#e63d4e;
   
 }
 
