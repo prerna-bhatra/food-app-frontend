@@ -72,22 +72,31 @@ const RegisterRestaurantForm = () => {
         if (!location.state?.resId) {
             setRegisterLoading(true);
             const response: any = await registerRestaurent(data, token);
+            console.log({response});
+            
             setRegisterLoading(false);
             if (response.error) {
-                toast.error(response.error.message)
+                toast.error(response.error.message);
             }
 
             if (response.status >= 200 || response.status <= 210) {
-                toast.success(response.data.message)
+                toast.success(response.data.message);
+                navigate("/partner-with-us-documents", {
+                    state: {
+                        id: response?.data?.newRestaurant.id
+                    }
+                })
             }
         }
-        else {
+        else
+        {
             navigate("/partner-with-us-documents", {
                 state: {
                     id: location.state?.resId, verfificationDetail
                 }
             })
         }
+
     };
 
     const handleOpenCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {

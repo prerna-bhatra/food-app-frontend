@@ -15,7 +15,7 @@ const RestaurantDocumentForm = () => {
 
     useEffect(() => {
         
-        if (location && location.state && location.state.id) {
+        if (location && location.state && location.state.verfificationDetail) {
             setValue("panCardNumber", location.state.verfificationDetail.panCardNumber);
             setValue("panCardName", location.state.verfificationDetail.panCardName)
             setValue("panCardAddress", location.state.verfificationDetail.panCardAddress)
