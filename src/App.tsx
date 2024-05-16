@@ -19,6 +19,8 @@ import MyRestaurent from "./components/MyRestaurent";
 import RestaurantDocumentForm from "./components/RestaurantDocumentForm";
 import MyExistingRestaurant from "./components/MyExistingRestaurant";
 import AnimationScreen from "./components/AnimationScreen";
+import Chatbot from "./ChatBot";
+import AddMenu from "./components/AddMenu";
 
 
 function App() {
@@ -87,6 +89,24 @@ function App() {
             <Route path="/ani" element={
               token ? (
                 <AnimationScreen />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/set-menu" element={
+              token ? (
+                <AddMenu />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/chat" element={
+              token ? (
+                <Chatbot />
               ) : (
                 <Navigate to="/" replace />
               )

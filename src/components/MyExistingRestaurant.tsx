@@ -19,14 +19,14 @@ const MyExistingRestaurant = () => {
             toast.error(response.error.message)
         }
 
-        if (response.status === 200 ) {
+        if (response.status === 200) {
             setMyRestaurantList(response.data.restaurants)
         }
     }
 
-    const goToUpdateRestaurant=(resId:number)=>{
-        naviugate("/partner-with-us",{
-            state:{resId}
+    const goToUpdateRestaurant = (resId: number) => {
+        naviugate("/partner-with-us", {
+            state: { resId }
         })
     }
 
@@ -39,14 +39,31 @@ const MyExistingRestaurant = () => {
                     <>
                         {myRestaurantList.map((restaurant) => (
                             <div
-                                onClick={()=>{
-                                    goToUpdateRestaurant(restaurant.id)
-                                }}
+
                                 key={restaurant.id}
-                                className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition duration-300 cursor-pointer"
+                                className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition duration-300"
                             >
-                                <h2 className="text-xl font-semibold mb-2">{restaurant.name}</h2>
-                                <p className="text-gray-600">ID: {restaurant.id}</p>
+                                <div className='flex flex-justify-content'>
+                                    <p className="text-gray-600 mr-2">ID: {restaurant.id} | </p>
+                                    <h2 className="text-xl font-semibold mb-2">
+                                        {restaurant.name}</h2>
+                                </div>
+                                <div className='flex flex justify-content'>
+                                    <button
+                                        onClick={() => {
+                                            goToUpdateRestaurant(restaurant.id)
+                                        }}
+                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                    >Restaurant</button>
+                                    <button
+                                        onClick={() => {
+                                            naviugate("/set-menu", {
+                                                state: { resId:restaurant.id  }
+                                            })
+                                        }}
+                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                    >Menu </button>
+                                </div>
                             </div>
                         ))}
                     </>

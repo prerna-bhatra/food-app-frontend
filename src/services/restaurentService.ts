@@ -6,7 +6,6 @@ export const registerRestaurent = async (formData: any ,token:string) => {
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return response;
 
     } catch (error) {
@@ -23,7 +22,6 @@ export const myRestaurants = async (token:string) => {
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -39,7 +37,6 @@ export const myRestaurantById = async (token:string , restaurantId:number) => {
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -57,7 +54,6 @@ export const imageOrDocumentUploadRestaurant = async (token:string , formData:an
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -72,7 +68,6 @@ export const verificationDetailsAddOrUpdate = async (token:string , formData:any
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -87,7 +82,6 @@ export const updateRestaurantRegistration = async (token:string , formData:any ,
             headers:{
                 'Authorization': `Bearer ${token}`,            }
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
