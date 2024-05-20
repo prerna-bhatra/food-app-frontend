@@ -3,5 +3,7 @@ export const pathsThatInludesOnlyProfile=
 "/partner-with-us-documents",
 "/my-restaurants",
 "/set-menu",
-"/chat"
+"/chat",
+"/restaurant",
+"/restaurant-list"
 ]

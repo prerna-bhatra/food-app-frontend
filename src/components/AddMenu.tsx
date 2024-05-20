@@ -133,28 +133,31 @@ const AddMenu: React.FC = () => {
                             {typeof (item.image) === "string" && item.image.length > 0 ? (
                                 <div>
                                     <img src={item.image} alt="Dish" className="h-24 w-24 object-cover rounded" />
-                                  
+
                                 </div>
                             ) : (
                                 <>
-                                    <label htmlFor="file-upload"
+                                    <label
+                                        htmlFor={`dishes.${index}.image`}
                                         style={{
                                             backgroundColor: '#f6f9fd',
                                             color: '#0d448d',
                                             border: '1px solid #0d448d',
                                             borderRadius: '5px',
-                                            padding: '10px 20px', cursor: 'pointer'
+                                            padding: '10px 20px',
+                                            cursor: 'pointer'
                                         }}
                                     >
-                                        Upload  Image
+                                        Upload Image
                                     </label>
                                     <input
                                         disabled={!isEdit}
                                         {...register(`dishes.${index}.image`, { required: true })}
                                         type="file"
                                         id={`dishes.${index}.image`}
-                                        style={{ left: 0, top: 0, opacity: 0, cursor: 'pointer', width: '100%', height: '100%' }}
+                                        style={{ display: 'none' }}
                                     />
+
                                     {errors.dishes && errors.dishes[index]?.image && (
                                         <span className="text-red-500">Dish image is required</span>
                                     )}

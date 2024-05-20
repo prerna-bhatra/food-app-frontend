@@ -21,6 +21,8 @@ import MyExistingRestaurant from "./components/MyExistingRestaurant";
 import AnimationScreen from "./components/AnimationScreen";
 import Chatbot from "./ChatBot";
 import AddMenu from "./components/AddMenu";
+import RestaurantPage from "./components/RestaurantPage";
+import RestaurantList from "./components/RestaurantList";
 
 
 function App() {
@@ -53,6 +55,24 @@ function App() {
             <Route path="/partner-with-us" element={
               token ? (
                 <RegisterRestaurantForm />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/restaurant" element={
+              token ? (
+                <RestaurantPage />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/restaurant-list" element={
+              token ? (
+                <RestaurantList />
               ) : (
                 <Navigate to="/" replace />
               )
