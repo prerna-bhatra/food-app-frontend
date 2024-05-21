@@ -29,6 +29,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleSearch = async (searchWord: string) => {
+    setIsOpen(false)
     if (searchWord.length > 0) {
       const response: any = await searchMenuOrRestaurant(token, searchWord);
       if (response.status === 200) {
@@ -39,20 +40,20 @@ const Navbar: React.FC = () => {
         setMenus(uniqueMenus)
       }
     }
-
-
+    else {
+      setRestaurants([])
+      setMenus([])
+    }
   }
-
-  console.log({ restaurants, menus });
 
 
   return (
     <nav className={` md:pr-40 pr-2 md:pl-40 border border-gray-300 mb-100 md:mt-0 ${pathsThatInludesOnlyProfile.includes(location.pathname) ? 'main-nav-bar' : 'nav-bar  pb-[8rem]'}`}>
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex justify-between items-center mt-6">
         <div className="flex items-center space-x-4">
           <button className="text-white font-bold flex items-center space-x-1" onClick={() => navigate("/")}>
             <span>
-              <img width={60} src={"https://static.vecteezy.com/system/resources/previews/014/300/816/original/motorbike-for-food-delivery-service-online-ordering-concept-png.png"} alt="logo" />
+              <img width={281} src={ "/images/logo.png"} alt="logo" />
             </span>
           </button>
 
@@ -116,41 +117,49 @@ const Navbar: React.FC = () => {
       {
         !pathsThatInludesOnlyProfile.includes(location.pathname) ? (
           <>
-            <div className="flex justify-center mt-20">
-              <div className="md:flex md:items-center ">
-                {token && (
-                  <div className="relative">
-                    <button className="text-white font-bold flex items-center space-x-1" onClick={() => setIsOpen(!isOpen)}>
-                      <span>Current Location:</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                    {isOpen && (
-                      <div className="absolute top-full left-0 bg-white shadow mt-2 md:mt-5">
-                        <Location />
-                      </div>
-                    )}
-                  </div>
-                )}
+            <div className="mt-40 md:pl-20">
+              <h1 className='text-white text-[32px] mb-10'>Discover the Delicious Difference</h1>
+              <div className="md:flex ">
                 <input
                   onChange={(e) => {
                     handleSearch(e.target.value)
                   }}
                   type="text"
-                  placeholder="Search"
-                  className="border border-gray-300 px-4 py-2 rounded focus:outline-none mt-5 md:mt-0 md:w-1/4 lg:w-full sm:w-full"
+                  placeholder="Search your favorite  food"
+                  className="border border-gray-300  px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 md:w-[1100px] h-[54px] lg:w-[1200px] sm:w-full "
                 />
+                {token && (
+                  <div className="relative ml-2">
+                    <button className="border border-gray-300 bg-white px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 md:w-[201px] h-[54px] lg:[201px] sm:w-full" onClick={() => {
+                      setRestaurants([]);
+                      setMenus([])
+                      setIsOpen(!isOpen)
+                    }} >
+                      <div className='flex justify-between'>
+                        <img src='/images/loclogo.png' />
+                        <img src='/images/dropdown.png' />
+                      </div>
+                    </button>
+                    {isOpen && (
+                      <div className="absolute top-0 right-0 bg-white shadow mt-20 border rounded-[32px] ">
+                        <Location />
+                      </div>
+                    )}
+                  </div>
+                )}
+
               </div>
 
             </div>
-            <div>
+            <div className='md:pl-20 md:pr-[200px] z-50 relative '>
               {menus && menus.length > 0 && (
-                <div className=" z-10 w-1/4 mt-2 bg-white  shadow-md ml-[32rem] p-1">
+                <div className=" z-10  w-full mt-2 bg-white  shadow-md  p-1">
                   <ul className="divide-y divide-gray-800">
                     {menus.map((menu: any) => (
                       <li key={menu.id} className="p-2 ">
                         <div onClick={() => {
+                          setRestaurants([])
+                          setMenus([])
                           navigate("/restaurant-list", {
                             state: { dishname: menu.dishname }
                           })
@@ -164,11 +173,13 @@ const Navbar: React.FC = () => {
               )}
 
               {restaurants && restaurants.length > 0 && (
-                <div className=" z-10 w-1/4  bg-white  shadow-md ml-[32rem] p-1">
+                <div className=" z-10  bg-white  shadow-md ">
                   <ul className="divide-y divide-gray-800">
                     {restaurants.map((restaurant: any) => (
                       <li key={restaurant.id} className="p-2">
                         <div onClick={() => {
+                          setRestaurants([])
+                          setMenus([])
                           navigate("/restaurant", {
                             state: {
                               resId: restaurant.id
@@ -187,9 +198,6 @@ const Navbar: React.FC = () => {
           </>
         ) : null
       }
-
-
-
 
       {isDropdownOpen && (
         <div className="md:hidden">

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -29,13 +30,14 @@
 }
 
 .nav-bar{
-  background-image: url('https://png.pngtree.com/background/20230413/original/pngtree-food-western-steak-delicious-background-picture-image_2422694.jpg');
+  background-image: url('../public/images/navbg.png');
   background-size: cover; /* Adjust background size as needed */
+  height: 529px;
   
 }
 
 .main-nav-bar{
- background-color:#e63d4e;
+ background-color:#FF6D03 ;
   
 }
 

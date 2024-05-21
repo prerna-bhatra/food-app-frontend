@@ -87,7 +87,7 @@ const Location = () => {
     }
 
     return (
-        <div className="bg-white rounded shadow p-4 w-[400px]">
+        <div className="bg-white border rounded-[32px] shadow p-4 w-[400px]">
             {
                 !currentLocation ? (
                     <>
@@ -98,7 +98,7 @@ const Location = () => {
                             placeholder="Search locations"
                             className="border border-gray-300 rounded px-4 py-2 mr-2 focus:outline-none focus:border-blue-500 mb-2 w-full"
                         /> */}
-                        <button onClick={handleUseCurrentLocation} className="bg-blue-500 text-white px-4 py-2 rounded w-full">Detect Current Location</button></>
+                        <button onClick={handleUseCurrentLocation} className=" rounded-[32px] bg-[#FF6D03] h-[46px] text-white px-4 py-2  w-full">Detect Current Location</button></>
                 ) : null
             }
             {currentLocation && (
@@ -115,7 +115,7 @@ const Location = () => {
             )}
 
             {!currentLocation && addresses && addresses.length > 0 && (
-                <div className="mt-4 border border-gray-300">
+                <div className="mt-4 border border-gray-300 rounded-[32px]">
                     {
                         !loading ? (
                             <>
