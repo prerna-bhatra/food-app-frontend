@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center space-x-4">
           <button className="text-white font-bold flex items-center space-x-1" onClick={() => navigate("/")}>
             <span>
-              <img width={281} src={ "/images/logo.png"} alt="logo" />
+              <img width={281} src={"/images/logo.png"} alt="logo" />
             </span>
           </button>
 
@@ -76,9 +76,13 @@ const Navbar: React.FC = () => {
               </button>
               <button
                 onClick={toggleDropdown}
-                className="relative flex items-center space-x-1 focus:outline-none text-white"
+                className="relative flex items-center justify-center bg-transparent text-gray-800  px-4 py-2 focus:outline-none"
               >
-                <span>{user.name}</span>
+                <span className='text-white font-bold bg-[#FF6D03] rounded-[100%] p-2'>
+                  {user.name.split(" ")[0].charAt(0).toUpperCase()}
+                  {user.name.split(" ")[user.name.split(" ").length - 1].charAt(0).toUpperCase()}
+                </span>
+                <img src="/images/white-dropdown.png" alt="Icon" className="w-6 h-6 ml-2" />
                 {isDropdownOpen && (
                   <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-300 rounded shadow-lg">
                     <ul>
@@ -141,7 +145,7 @@ const Navbar: React.FC = () => {
                       </div>
                     </button>
                     {isOpen && (
-                      <div className="absolute top-0 right-0 bg-white shadow mt-20 border rounded-[32px] ">
+                      <div className="absolute top-0 right-0 bg-white shadow mt-[4rem] border rounded-[32px] ">
                         <Location />
                       </div>
                     )}
