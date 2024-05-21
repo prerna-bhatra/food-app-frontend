@@ -23,6 +23,8 @@ import Chatbot from "./ChatBot";
 import AddMenu from "./components/AddMenu";
 import RestaurantPage from "./components/RestaurantPage";
 import RestaurantList from "./components/RestaurantList";
+import Checkout from "./components/Checkout";
+import UserOrders from "./components/UserOrders";
 
 
 function App() {
@@ -64,6 +66,24 @@ function App() {
             <Route path="/restaurant" element={
               token ? (
                 <RestaurantPage />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/my-orders" element={
+              token ? (
+                <UserOrders />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/checkout" element={
+              token ? (
+                <Checkout />
               ) : (
                 <Navigate to="/" replace />
               )

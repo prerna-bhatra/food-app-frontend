@@ -3,14 +3,29 @@ import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { restaurantById } from '../services/restaurentService';
 import Cart from './Cart';
-// import Checkout from './Checkout'; // Import the Checkout component
+import Location from './Location';
 
 const RestaurantPage = () => {
     const location = useLocation();
     const { token } = useSelector((state: any) => state.auth);
     const [restaurant, setRestaurant] = useState<any>(null);
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
-    const [cartItems , setCartItems] = useState();
+
+    const [isLocationOpen, setLocationOpen] = useState(false);
+    const [isCartOpen, setCartOpen] = useState(false);
+    const [isPaymentOpen, setPaymentOpen] = useState(false);
+
+    const toggleLocation = () => {
+        setLocationOpen(!isLocationOpen);
+    };
+
+    const toggleCart = () => {
+        setCartOpen(!isCartOpen);
+    };
+
+    const togglePayment = () => {
+        setPaymentOpen(!isPaymentOpen);
+    };
 
     useEffect(() => {
         fetchRestaurant();
@@ -18,16 +33,37 @@ const RestaurantPage = () => {
 
     const fetchRestaurant = async () => {
         const response = await restaurantById(token, location?.state?.resId);
-        console.log({ response });
-
         if (response.status === 200) {
             setRestaurant(response.data.restaurant);
         }
     };
 
     const addToCart = (menu: any) => {
-        setSelectedItems([...selectedItems, menu]);
+        const existingItemIndex = selectedItems.findIndex(item => item.id === menu.id);
+
+        if (existingItemIndex !== -1) {
+            const updatedItems = [...selectedItems];
+            updatedItems[existingItemIndex] = {
+                ...updatedItems[existingItemIndex],
+                quantity: updatedItems[existingItemIndex].quantity + 1
+            };
+            setSelectedItems(updatedItems);
+        } else {
+            setSelectedItems([...selectedItems, { ...menu, quantity: 1 }]);
+        }
     };
+
+    const handleSetCartItems = (updatedItems: any) => {
+        setSelectedItems(updatedItems);
+    };
+
+    const handleDelete = (index: number) => {
+        const updatedItems: any = [...selectedItems];
+        updatedItems.splice(index, 1);
+        setSelectedItems(updatedItems);
+    };
+
+    const [checkoutAddress, setCheckoutAddress] = useState<any>();
 
     if (!restaurant) {
         return <div>Loading...</div>;
@@ -37,7 +73,7 @@ const RestaurantPage = () => {
     const firstMenuImage = Menus?.length ? Menus[0].dishImage : '';
 
     return (
-        <div className="container mx-auto mt-10 px-40">
+        <div className="container md:mx-auto mt-10 md:px-40">
             {firstMenuImage && (
                 <img
                     src={firstMenuImage}
@@ -45,21 +81,21 @@ const RestaurantPage = () => {
                     className="w-full h-64 object-cover mb-8 rounded-lg"
                 />
             )}
-            <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+            <div className="bg-white  md:p-6 rounded-lg shadow-md mb-8">
                 <h2 className="text-3xl font-bold mb-4">{name}</h2>
                 <p className="text-gray-700 mb-4">{completeAddress}</p>
             </div>
-            <div className="mt-8 flex">
-                <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="mt-8 md:flex">
+                <div className="md:flex-grow md:grid  md:grid-cols-2 md:gap-6 sm:grid-cols-1">
                     {Menus && Menus.length > 0 ? (
                         Menus.map((menu: any) => (
-                            <div key={menu.id} className="bg-white p-4 rounded-lg shadow-md">
+                            <div key={menu.id} className="bg-white md:p-4 rounded-lg shadow-md">
                                 <img
                                     src={menu.dishImage}
                                     alt={menu.dishname}
                                     className="w-full h-32 object-cover mb-4 rounded-lg"
                                 />
-                                <div className='flex justify-between'>
+                                <div className='md:flex md:justify-between'>
                                     <div>
                                         <h4 className="text-xl font-bold mb-2">{menu.dishname}</h4>
                                         <p className="text-gray-600 mb-2">₹{menu.price}</p>
@@ -79,8 +115,51 @@ const RestaurantPage = () => {
                         <p>No menu items available.</p>
                     )}
                 </div>
-                <div className="w-1/4 h-1/4 ml-8 border">
-                    <Cart items={selectedItems} />
+
+                <div className="w-1/4 h-1/4 ml-8  bg-transparent ">
+                    <div className='w-full'>
+                        <div className='flex space-x-2 justify-between'>
+                            <div className='flex '>
+                                <div>
+                                    <img src='/images/loclogo.png' />
+                                </div>
+                                <div className='mx-2'>
+                                    <div className=''>
+                                        {
+                                            checkoutAddress ? (
+                                                <p>
+                                                    {checkoutAddress.houseName + ", "}
+                                                    {checkoutAddress.area}
+                                                    {/* {checkoutAddress.landmark + checkoutAddress.landmark ? ", " : ""} */}
+                                                    {/* {checkoutAddress.googleAddress} */}
+                                                </p>
+                                            ) : (
+                                                <p className='font-bold'>Current Address</p>
+                                            )
+                                        }
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button onClick={toggleLocation} className="mb-2">
+                                <img src='/images/dropdown.png' />
+                            </button>
+                        </div>
+
+                        {isLocationOpen && <Location setCheckoutAddress={setCheckoutAddress} />}
+                    </div>
+
+                    <div className='border mt-2'>
+                        <Cart
+                            items={selectedItems}
+                            setCartItems={handleSetCartItems}
+                            onDeleteItem={handleDelete}
+                            checkoutAddress={checkoutAddress}
+                            restaurantId={location?.state?.resId}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="mt-8">

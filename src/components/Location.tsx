@@ -7,10 +7,10 @@ import { BiArrowBack } from 'react-icons/bi';
 import { userSavedAddress } from '../services/userService';
 import { FaSpinner } from 'react-icons/fa';
 import SeacrhAddress from './SeacrhAddress';
-import  GooglePlacesAutocomplete  from 'react-google-autocomplete';
+import GooglePlacesAutocomplete from 'react-google-autocomplete';
 import { fetchAddress } from '../services/googleApiService';
 
-const Location = () => {
+const Location = (props: any) => {
     const { token } = useSelector((state: any) => state.auth);
 
     const [searchInput, setSearchInput] = useState('');
@@ -29,7 +29,7 @@ const Location = () => {
     }[]>([]);
     const [locationAddress, setLocationAddress] = useState<string>('')
 
-    const [isSearchAddress , setIsSearchAddress] = useState(false);
+    const [isSearchAddress, setIsSearchAddress] = useState(false);
 
     useEffect(() => {
         fetchSavedAddress()
@@ -39,7 +39,7 @@ const Location = () => {
     const fetchSavedAddress = async () => {
         setLoading(true)
         userSavedAddress(token).then((response: any) => {
-            setLoading(false)
+            setLoading(false);
             setAddresses(response.data);
         }).catch((error) => {
 
@@ -71,7 +71,7 @@ const Location = () => {
         } else {
         }
     };
-    
+
     const addressTypeIcons: { [key: string]: string } = {
         Home: '🏠',
         Work: '💼',
@@ -80,10 +80,15 @@ const Location = () => {
 
 
     const handleFormSubmission = () => {
-        console.log("handleFormSubmission ");
-
         setCurrentLocation(null);
         fetchSavedAddress();
+    }
+
+    const [selectedAddress, setSelectedAddress] = useState<any>()
+
+    const selectAddress = (address: any) => {
+        setSelectedAddress(address);
+        props.setCheckoutAddress(address)
     }
 
     return (
@@ -91,13 +96,6 @@ const Location = () => {
             {
                 !currentLocation ? (
                     <>
-                        {/* <input
-                            type="text"
-                            value={searchInput}
-                            onChange={handleSearchInputChange}
-                            placeholder="Search locations"
-                            className="border border-gray-300 rounded px-4 py-2 mr-2 focus:outline-none focus:border-blue-500 mb-2 w-full"
-                        /> */}
                         <button onClick={handleUseCurrentLocation} className=" rounded-[32px] bg-[#FF6D03] h-[46px] text-white px-4 py-2  w-full">Detect Current Location</button></>
                 ) : null
             }
@@ -122,7 +120,9 @@ const Location = () => {
                                 <h3 className="text-lg text-gray-400">Saved Addresses:</h3>
                                 <ul className="pl-6 mt-2">
                                     {addresses.map((address: any, index: number) => (
-                                        <li key={index} className="mb-1 cursor-pointer" >
+                                        <li key={index} className="mb-1 cursor-pointer" onClick={() => {
+                                            selectAddress(address);
+                                        }} >
                                             <div className="flex items-start">
                                                 <span className="mr-2">{addressTypeIcons[address.addressType]}</span>
                                                 <span className="font-bold">{address.addressType}</span>
@@ -151,9 +151,9 @@ const Location = () => {
 
 
             {
-                isSearchAddress && currentLocation ?(
+                isSearchAddress && currentLocation ? (
                     <SeacrhAddress />
-                ):null
+                ) : null
             }
         </div>
     );

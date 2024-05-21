@@ -5,5 +5,7 @@ export const pathsThatInludesOnlyProfile=
 "/set-menu",
 "/chat",
 "/restaurant",
-"/restaurant-list"
+"/restaurant-list",
+"/checkout",
+"/my-orders"
 ]

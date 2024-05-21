@@ -8,7 +8,6 @@ export const createUserAddress = async (formData: any, token: string) => {
         const response = await axiosInstance.post(`/user/address`, formData, {
             headers
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -25,7 +24,6 @@ export const userSavedAddress = async ( token: string) => {
         const response = await axiosInstance.get(`/user/address`, {
             headers
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
@@ -42,7 +40,6 @@ export const updateUserName = async (data:any , token: string) => {
         const response = await axiosInstance.post(`/user/profile`, data,{
             headers
         });
-        console.log({ response });
         return { data: response.data, status: response.status }
 
     } catch (error) {
