@@ -25,6 +25,7 @@ import RestaurantPage from "./components/RestaurantPage";
 import RestaurantList from "./components/RestaurantList";
 import Checkout from "./components/Checkout";
 import UserOrders from "./components/UserOrders";
+import ManageOrders from "./components/ManageOrders";
 
 
 function App() {
@@ -84,6 +85,15 @@ function App() {
             <Route path="/checkout" element={
               token ? (
                 <Checkout />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            } />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/manage-orders" element={
+              token ? (
+                <ManageOrders />
               ) : (
                 <Navigate to="/" replace />
               )

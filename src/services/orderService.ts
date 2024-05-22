@@ -31,18 +31,32 @@ export const ordersByUserId = async (token: string) => {
     }
 }
 
-// // 
-// export const ordersByRestaurantId = async (token: string) => {
-//     try {
-//         const response = await axiosInstance.get(`/restaurant/my-restaurants`, {
-//             headers: {
-//                 'Authorization': `Bearer ${token}`,
-//             }
-//         });
-//         return { data: response.data, status: response.status }
+export const ordersByRestaurantId = async (token: string , restaurantId:number) => {
+    try {
+        const response = await axiosInstance.get(`/order/manage-orders/${restaurantId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        return { data: response.data, status: response.status }
 
-//     } catch (error) {
-//         console.error('Error :', error);
-//         return { error }
-//     }
-// }
+    } catch (error) {
+        console.error('Error :', error);
+        return { error }
+    }
+}
+
+export const orderStatusUpdate = async (token: string , orderId:number ,formData:any ) => {
+    try {
+        const response = await axiosInstance.post(`/order/order-status/${orderId}`,formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        return { data: response.data, status: response.status }
+
+    } catch (error) {
+        console.error('Error :', error);
+        return { error }
+    }
+}

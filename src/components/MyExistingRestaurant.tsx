@@ -58,11 +58,19 @@ const MyExistingRestaurant = () => {
                                     <button
                                         onClick={() => {
                                             naviugate("/set-menu", {
-                                                state: { resId:restaurant.id  }
+                                                state: { resId: restaurant.id }
                                             })
                                         }}
                                         className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
                                     >Menu </button>
+                                    <button
+                                        onClick={() => {
+                                            naviugate("/manage-orders", {
+                                                state: { resId: restaurant.id }
+                                            })
+                                        }}
+                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+                                    >Orders </button>
                                 </div>
                             </div>
                         ))}
