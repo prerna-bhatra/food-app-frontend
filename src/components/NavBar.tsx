@@ -100,7 +100,7 @@ const Navbar: React.FC = () => {
                         <button className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 focus:outline-none">Wallet</button>
                       </li>
                       <li>
-                        <button onClick={() => {                          
+                        <button onClick={() => {
                           navigate("/my-orders");
                         }} className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200 focus:outline-none">Orders</button>
                       </li>
@@ -123,40 +123,38 @@ const Navbar: React.FC = () => {
       {
         !pathsThatInludesOnlyProfile.includes(location.pathname) ? (
           <>
-            <div className="mt-40 md:pl-20">
-              <h1 className='text-white text-[32px] mb-10'>Discover the Delicious Difference</h1>
-              <div className="md:flex ">
+            <div className="mt-40 md:pl-20 px-4">
+              <h1 className="text-white text-2xl md:text-3xl mb-10">Discover the Delicious Difference</h1>
+              <div className="md:flex md:items-center">
                 <input
-                  onChange={(e) => {
-                    handleSearch(e.target.value)
-                  }}
+                  onChange={(e) => handleSearch(e.target.value)}
                   type="text"
-                  placeholder="Search your favorite  food"
-                  className="border border-gray-300  px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 md:w-[1100px] h-[54px] lg:w-[1200px] sm:w-full "
+                  placeholder="Search your favorite food"
+                  className="border border-gray-300 px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 w-full md:w-auto md:flex-grow h-[54px]"
                 />
                 {token && (
-                  <div className="relative ml-2">
-                    <button className="border border-gray-300 bg-white px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 md:w-[201px] h-[54px] lg:[201px] sm:w-full" onClick={() => {
-                      setRestaurants([]);
-                      setMenus([])
-                      setIsOpen(!isOpen)
-                    }} >
-                      <div className='flex justify-between'>
-                        <img src='/images/loclogo.png' />
-                        <img src='/images/dropdown.png' />
-                      </div>
+                  <div className="relative mt-5 md:mt-0 md:ml-2 w-full md:w-auto">
+                    <button
+                      className="border border-gray-300 bg-white px-4 py-2 rounded-[40px] focus:outline-none w-full md:w-[201px] h-[54px] flex items-center justify-between"
+                      onClick={() => {
+                        setRestaurants([]);
+                        setMenus([]);
+                        setIsOpen(!isOpen);
+                      }}
+                    >
+                      <img src="/images/loclogo.png" alt="Location" />
+                      <img src="/images/dropdown.png" alt="Dropdown" />
                     </button>
                     {isOpen && (
-                      <div className="absolute top-0 right-0 bg-white shadow mt-[4rem] border rounded-[32px] ">
+                      <div className="absolute top-full mt-2 right-0 bg-white shadow-lg border rounded-[32px] z-10">
                         <Location />
                       </div>
                     )}
                   </div>
                 )}
-
               </div>
-
             </div>
+
             <div className='md:pl-20 md:pr-[200px] z-50 relative '>
               {menus && menus.length > 0 && (
                 <div className=" z-10  w-full mt-2 bg-white  shadow-md  p-1">
