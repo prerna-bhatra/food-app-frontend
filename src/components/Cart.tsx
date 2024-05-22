@@ -61,7 +61,7 @@ const Cart = (props: any) => {
                 items.length > 0 ? (
                     <>
                         <ToastContainer />
-                        <div className='max-h-96 overflow-y-scroll p-4'>
+                        <div className='md:max-h-96 overflow-y-scroll p-4'>
                             <p className='text-center mb-2 font-bold'>Your Cart</p>
                             {
                                 items.map((item: any, index: number) => (

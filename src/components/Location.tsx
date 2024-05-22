@@ -88,7 +88,10 @@ const Location = (props: any) => {
 
     const selectAddress = (address: any) => {
         setSelectedAddress(address);
-        props.setCheckoutAddress(address)
+        if(props.setCheckoutAddress){
+            props?.setCheckoutAddress(address)
+
+        }
     }
 
     return (

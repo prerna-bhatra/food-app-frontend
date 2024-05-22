@@ -86,21 +86,21 @@ const RestaurantPage = () => {
                 <p className="text-gray-700 mb-4">{completeAddress}</p>
             </div>
             <div className="mt-8 md:flex">
-                <div className="md:flex-grow md:grid  md:grid-cols-2 md:gap-6 sm:grid-cols-1">
+                <div className="md:flex-grow md:grid  md:grid-cols-2 md:gap-6 sm:grid-cols-1 ">
                     {Menus && Menus.length > 0 ? (
                         Menus.map((menu: any) => (
-                            <div key={menu.id} className="bg-white md:p-4 rounded-lg shadow-md">
+                            <div key={menu.id} className="bg-white md:p-4 rounded-lg shadow-md sm:p-4">
                                 <img
                                     src={menu.dishImage}
                                     alt={menu.dishname}
                                     className="w-full h-32 object-cover mb-4 rounded-lg"
                                 />
-                                <div className='md:flex md:justify-between'>
+                                <div className='flex justify-between'>
                                     <div>
                                         <h4 className="text-xl font-bold mb-2">{menu.dishname}</h4>
                                         <p className="text-gray-600 mb-2">₹{menu.price}</p>
                                     </div>
-                                    <div className="flex items-center">
+                                    <div className="flex items-center ">
                                         <button
                                             onClick={() => addToCart(menu)}
                                             className="bg-blue-500 text-white py-1 px-3 rounded-lg"
@@ -116,7 +116,7 @@ const RestaurantPage = () => {
                     )}
                 </div>
 
-                <div className="w-1/4 h-1/4 ml-8  bg-transparent ">
+                <div className="md:w-1/4 h-1/4 ml-8  bg-transparent mt-6 ">
                     <div className='w-full'>
                         <div className='flex space-x-2 justify-between'>
                             <div className='flex '>
