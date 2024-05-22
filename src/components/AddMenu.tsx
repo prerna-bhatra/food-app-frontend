@@ -81,10 +81,8 @@ const AddMenu: React.FC = () => {
             toast.error(response.error.message)
         }
 
-        console.log({ response });
-
-
         if (response.status === 200) {
+            existingMenu()
             toast.success("Succefully Uploaded document")
         }
         else {
