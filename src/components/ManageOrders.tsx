@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { orderStatusUpdate, ordersByRestaurantId } from '../services/orderService';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 const ManageOrders = () => {
     const { token } = useSelector((state: any) => state.auth);
@@ -24,12 +24,10 @@ const ManageOrders = () => {
     };
 
     const handleChangeStatus = async (orderId: number, newStatus: string) => {
-        const response = await orderStatusUpdate(token, orderId, {status:newStatus});
-        console.log({ response });
+        const response = await orderStatusUpdate(token, orderId, { status: newStatus });
         if (response?.status === 200) {
             fetchOrders();
             toast.success("order status changed");
-
         }
         else {
             toast.error("Somethin went wrong")
@@ -41,6 +39,7 @@ const ManageOrders = () => {
 
     return (
         <div className="container mx-auto p-4">
+            <ToastContainer />
             <div className="mb-4">
                 <label htmlFor="orderStatus" className="mr-2">Filter by Status:</label>
                 <select

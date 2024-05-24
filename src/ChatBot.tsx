@@ -1,20 +1,41 @@
-// frontend/src/Chatbot.tsx
 import React, { useState, useEffect } from 'react';
 import socket from './socket';
+import { useSelector } from 'react-redux';
 
 interface Message {
     sender: 'user' | 'bot';
     message: string;
+    orders?: any[]; // Adding orders property to the Message interface
 }
 
 const Chatbot: React.FC = () => {
+    const { token } = useSelector((state: any) => state.auth);
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
 
     useEffect(() => {
-        socket.on('botReply', (data: { text: string }[]) => {
-            const botMessages: any = data.map((msg) => ({ sender: 'bot', message: msg.text }));
-            console.log({ botMessages });
+        socket.on('botReply', (data: { text?: string, custom?: any, orders?: any[] }[]) => {
+            let botMessages: Message[] = [];
+            data.forEach((msg) => {
+                if (msg.text) {
+                    // If bot sends a text message
+                    const message: Message = {
+                        sender: 'bot',
+                        message: msg.text,
+                    };
+                    botMessages.push(message);
+                } else if (msg.custom) {
+                    // If bot sends custom data
+                    const message: Message = {
+                        sender: 'bot',
+                        message: '', // No message for custom data
+                        orders: msg.custom.orders, // Store orders in the message
+                    };
+
+                    botMessages.push(message);
+                }
+            });
             setMessages((prevMessages) => [...prevMessages, ...botMessages]);
         });
 
@@ -23,32 +44,60 @@ const Chatbot: React.FC = () => {
         };
     }, []);
 
+
     const sendMessage = () => {
         if (!input) return;
         const userMessage: Message = { sender: 'user', message: input };
         setMessages([...messages, userMessage]);
-        socket.emit('sendMessage', input);
+        socket.emit('sendMessage', { message: input, token });
         setInput('');
     };
 
+    const handleOrderClick = (order: any) => {
+        // Handle order click here, e.g., dispatch an action, open a modal, etc.
+        console.log('Selected order:', order);
+    };
+
     return (
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <h2>Chatbot</h2>
-            <div style={{ border: '1px solid #ccc', padding: '10px', height: '400px', overflowY: 'scroll' }}>
+        <div className="max-w-screen-md mx-auto">
+            <h2 className="text-2xl mb-4">Chatbot</h2>
+            <div className="border border-gray-300 p-4 h-96 overflow-y-auto mb-4">
                 {messages.map((msg, index) => (
-                    <div key={index} style={{ textAlign: msg.sender === 'user' ? 'right' : 'left' }}>
-                        <p><strong>{msg.sender}:</strong> {msg.message}</p>
+                    <div key={index} className={`text-${msg.sender === 'user' ? 'right' : 'left'}`}>
+                        {msg.orders ? (
+                            <div>
+                                <ul className="list-disc pl-6">
+                                    {msg.orders.map((order, orderIndex) => (
+                                        <li key={orderIndex} className="cursor-pointer text-blue-500" onClick={() => handleOrderClick(order)}>
+                                            <div className="flex items-center">
+                                                <img src={order.foodItems[0].dishImage} alt={order.foodItems[0].dishname} className="w-10 h-10 mr-2" />
+                                                <div>
+                                                    <p className="font-semibold">{order.foodItems[0].dishname}</p>
+                                                    <p>Date: {order.createdAt.slice(0, 10)}</p>
+                                                    <p>Time: {order.createdAt.slice(11, 19)}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <p><strong>{msg.sender}:</strong> {msg.message}</p>
+                        )}
+
                     </div>
                 ))}
             </div>
-            <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                style={{ width: '80%', marginRight: '10px' }}
-            />
-            <button onClick={sendMessage}>Send</button>
+            <div className="flex items-center">
+                <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                    className="w-4/5 mr-4 py-2 px-4 border border-gray-300 rounded-lg"
+                />
+                <button onClick={sendMessage} className="py-2 px-4 bg-blue-500 text-white rounded-lg">Send</button>
+            </div>
         </div>
     );
 };
