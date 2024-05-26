@@ -96,11 +96,9 @@ function App() {
           </Route>
           <Route element={<WithNavbar />}>
             <Route path="/restaurant-list" element={
-              token ? (
-                <RestaurantList />
-              ) : (
-                <Navigate to="/" replace />
-              )
+
+              <RestaurantList />
+
             } />
           </Route>
           <Route element={<WithNavbar />}>

@@ -32,24 +32,29 @@ const Cart = (props: any) => {
     }, 0);
 
     const placeOrder = async () => {
+        if (!token) {
+            toast.error("please login to checkout");
+            return
+        }
+
         if (!props.checkoutAddress) {
             toast.error("please select an address to checkout");
             return
         }
         console.log({ checkoutAddress: props.checkoutAddress });
-        const response:any = await createOrder({
+        const response: any = await createOrder({
             totalPrice,
             checkoutAddress: props.checkoutAddress,
             foodItems: items,
             restaurantId: props.restaurantId,
-            paymentMethod:'COD'
+            paymentMethod: 'COD'
         }, token)
         console.log({ response });
-        if(response.status===200){
+        if (response.status === 200) {
             toast.success("order created succefully");
             navigate("/my-orders")
         }
-        else{
+        else {
 
         }
 
