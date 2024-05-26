@@ -13,6 +13,7 @@ const Chatbot: React.FC = () => {
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState('');
 
     useEffect(() => {
         socket.on('botReply', (data: { text?: string, custom?: any, orders?: any[] }[]) => {
@@ -54,8 +55,21 @@ const Chatbot: React.FC = () => {
     };
 
     const handleOrderClick = (order: any) => {
+        
         // Handle order click here, e.g., dispatch an action, open a modal, etc.
-        console.log('Selected order:', order);
+        const userMessage: Message = { sender: 'user', message: order.id };
+        setSelectedOrder(order.id);
+        setMessages([...messages, userMessage]);
+        const message: Message = {
+            sender: 'bot',
+            message: 'your order is '+order.orderStatus,
+        };
+        const botMessages: Message[] = [];
+        botMessages.push(message);
+        setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+
+        // socket.emit('sendMessage', { message: order.id });
+
     };
 
     return (

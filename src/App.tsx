@@ -46,6 +46,9 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
           <Route element={<WithNavbar />}>
+            <Route path="/restaurant" element={<RestaurantPage />} />
+          </Route>
+          <Route element={<WithNavbar />}>
             <Route path="/profile" element={
               token ? (
                 <Profile />
@@ -63,15 +66,7 @@ function App() {
               )
             } />
           </Route>
-          <Route element={<WithNavbar />}>
-            <Route path="/restaurant" element={
-              token ? (
-                <RestaurantPage />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            } />
-          </Route>
+
           <Route element={<WithNavbar />}>
             <Route path="/my-orders" element={
               token ? (
