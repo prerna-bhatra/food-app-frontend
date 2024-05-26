@@ -28,7 +28,7 @@ const Login: React.FC = () => {
           token: response.data.token,
           user: response.data.user
         }));
-        navigate("/");
+        // navigate("/");
       } else {
         toast.error(response.response.data.error);
       }
