@@ -50,19 +50,36 @@ const Chatbot: React.FC = () => {
         if (!input) return;
         const userMessage: Message = { sender: 'user', message: input };
         setMessages([...messages, userMessage]);
-        socket.emit('sendMessage', { message: input, token });
+        const botMessages: Message[] = [];
+        if (input.includes("cancel")) {
+            if(!selectedOrder)
+                {
+                    const message: Message = {
+                        sender: 'bot',
+                        message: 'Please select an order ',
+                    };                    
+                    botMessages.push(message);
+                    setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+                }
+            socket.emit('sendMessage', { message: input, order_id:selectedOrder, token });
+
+        }
+        else {
+            socket.emit('sendMessage', { message: input, token });
+
+        }
         setInput('');
     };
 
     const handleOrderClick = (order: any) => {
-        
+
         // Handle order click here, e.g., dispatch an action, open a modal, etc.
         const userMessage: Message = { sender: 'user', message: order.id };
         setSelectedOrder(order.id);
         setMessages([...messages, userMessage]);
         const message: Message = {
             sender: 'bot',
-            message: 'your order is '+order.orderStatus,
+            message: 'your order is ' + order.orderStatus,
         };
         const botMessages: Message[] = [];
         botMessages.push(message);
