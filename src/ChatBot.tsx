@@ -90,7 +90,7 @@ const Chatbot: React.FC = () => {
     };
 
     return (
-        <div className="max-w-screen-md mx-auto">
+        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg">
             <h2 className="text-2xl mb-4">Chatbot</h2>
             <div className="border border-gray-300 p-4 h-96 overflow-y-auto mb-4">
                 {messages.map((msg, index) => (

@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FiMessageSquare, FiX } from 'react-icons/fi'; // Importing the chat icon
+import Chatbot from '../ChatBot';
+import { FaCross } from 'react-icons/fa';
 
 const MainService = () => {
+    const [chatVisible, setChatVisible] = useState(false);
+
+    const toggleChat = () => {
+        setChatVisible(!chatVisible);
+    };
+
     return (
-        <div className='px-4 md:px-20 lg:px-40 '>
-            <h1 className='text-2xl md:text-3xl lg:text-4xl mb-6 mt-6 lg:mb-10 lg:mt-10 font-bold '>Explore the Best In Pune</h1>
+        <div className='px-4 md:px-20 lg:px-40 relative'>
+            <h1 className='text-2xl md:text-3xl lg:text-4xl mb-6 mt-6 lg:mb-10 lg:mt-10 font-bold'>
+                Explore the Best In Pune
+            </h1>
             <div className='flex flex-wrap lg:flex-nowrap justify-center mt-4 mx-auto gap-5'>
                 <div className="w-full sm:w-1/2 lg:w-1/3 rounded overflow-hidden shadow-lg mb-8 rounded-[40px]">
                     <img src={"https://desibaniye.com/wp-content/uploads/2022/02/chole-chawal.jpg"} className="w-full rounded-[40px]" alt="Order Online" />
@@ -27,6 +38,15 @@ const MainService = () => {
                     </div>
                 </div>
             </div>
+
+            <button
+                onClick={toggleChat}
+                className='fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center z-50'
+            >
+                {chatVisible ? <FiX/> : <FiMessageSquare size={24} />}
+            </button>
+
+            {chatVisible && <Chatbot />}
         </div>
     );
 };
