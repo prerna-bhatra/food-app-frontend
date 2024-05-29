@@ -17,7 +17,19 @@ const Chatbot: React.FC = () => {
 
     useEffect(() => {
         socket.on('botReply', (data: { text?: string, custom?: any, orders?: any[] }[]) => {
+            console.log({ data });
+
+
             let botMessages: Message[] = [];
+            
+            if (!data.length) {
+                const message: Message = {
+                    sender: 'bot',
+                    message: 'orders not found', // No message for custom data
+                };
+                botMessages.push(message)
+
+            }
             data.forEach((msg) => {
                 if (msg.text) {
                     // If bot sends a text message
