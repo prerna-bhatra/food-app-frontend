@@ -42,8 +42,8 @@ const Chatbot: React.FC = () => {
                     // If bot sends custom data
                     const message: Message = {
                         sender: 'bot',
-                        message: '', // No message for custom data
-                        orders: msg.custom.orders, // Store orders in the message
+                        message: msg?.custom?.message, // No message for custom data
+                        orders: msg?.custom?.orders, // Store orders in the message
                     };
 
                     botMessages.push(message);
@@ -123,7 +123,7 @@ const Chatbot: React.FC = () => {
     };
 
     return (
-        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg">
+        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg" style={{ width: '400px' }}>
             <h2 className="text-2xl mb-4">Chatbot</h2>
             <div className="border border-gray-300 p-4 h-96 overflow-y-auto mb-4">
                 {messages.map((msg, index) => (
