@@ -62,6 +62,11 @@ const Location = (props: any) => {
                     setCurrentLocation({ latitude, longitude });
                     const locationAddress = await fetchAddress(latitude, longitude) || '';
                     setLocationAddress(locationAddress.formatted_address)
+
+                    if (locationAddress?.address_components?.length > 1) {
+                        if(props?.onAddressUpdate)
+                        props?.onAddressUpdate(locationAddress.address_components[1].long_name);
+                    }
                 },
                 (error) => {
                     console.log({ error });
@@ -78,7 +83,6 @@ const Location = (props: any) => {
         Other: '📍'
     };
 
-
     const handleFormSubmission = () => {
         setCurrentLocation(null);
         fetchSavedAddress();
@@ -88,9 +92,8 @@ const Location = (props: any) => {
 
     const selectAddress = (address: any) => {
         setSelectedAddress(address);
-        if(props.setCheckoutAddress){
+        if (props.setCheckoutAddress) {
             props?.setCheckoutAddress(address)
-
         }
     }
 

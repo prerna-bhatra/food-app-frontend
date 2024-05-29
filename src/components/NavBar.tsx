@@ -46,6 +46,11 @@ const Navbar: React.FC = () => {
     }
   }
 
+  const [addressPart, setAddressPart] = useState<string>(''); // State to store the address part
+  const handleAddressUpdate = (address: string) => {
+    setAddressPart(address);
+  };
+
 
   return (
     <nav className={` md:pr-40 pr-2 md:pl-40 border border-gray-300 mb-100 md:mt-0 ${pathsThatInludesOnlyProfile.includes(location.pathname) ? 'main-nav-bar' : 'nav-bar  pb-[8rem]'}`}>
@@ -56,7 +61,6 @@ const Navbar: React.FC = () => {
               <img width={281} src={"/images/logo.png"} alt="logo" />
             </span>
           </button>
-
         </div>
 
         <div className="md:block space-x-4">
@@ -143,11 +147,12 @@ const Navbar: React.FC = () => {
                       }}
                     >
                       <img src="/images/loclogo.png" alt="Location" />
+                      {addressPart}
                       <img src="/images/dropdown.png" alt="Dropdown" />
                     </button>
                     {isOpen && (
                       <div className="absolute top-full mt-2 right-0 bg-white shadow-lg border rounded-[32px] z-10">
-                        <Location />
+                        <Location onAddressUpdate={handleAddressUpdate} />
                       </div>
                     )}
                   </div>
