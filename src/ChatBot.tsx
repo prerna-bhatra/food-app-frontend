@@ -83,7 +83,7 @@ const Chatbot: React.FC = () => {
         const userMessage: Message = { sender: 'user', message: input };
         setMessages([...messages, userMessage]);
         const botMessages: Message[] = [];
-        if (input.includes("cancel") || input.includes("change") || input.includes("complaint")) {
+        if (input.includes("cancel") || input.includes("change") || input.includes("address") || input.includes("complaint")) {
             if (!selectedOrder) {
                 const message: Message = {
                     sender: 'bot',
