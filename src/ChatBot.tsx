@@ -10,13 +10,9 @@ interface Message {
     userSavedAddress?: any[];
 }
 
-
-
 const Chatbot: React.FC = () => {
     const { token } = useSelector((state: any) => state.auth);
     const savedAddress = useSelector((state: any) => state.address);
-    console.log({ savedAddress });
-
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
@@ -26,16 +22,12 @@ const Chatbot: React.FC = () => {
         socket.on('botReply', (data: { text?: string, custom?: any, orders?: any[] }[]) => {
             let botMessages: Message[] = [];
 
-
-            console.log({ data });
-
             if (!data.length) {
                 const message: Message = {
                     sender: 'bot',
                     message: 'orders not found or something went wrong', // No message for custom data
                 };
                 botMessages.push(message)
-
             }
             data.forEach((msg) => {
                 if (msg.text) {
@@ -91,7 +83,7 @@ const Chatbot: React.FC = () => {
         const userMessage: Message = { sender: 'user', message: input };
         setMessages([...messages, userMessage]);
         const botMessages: Message[] = [];
-        if (input.includes("cancel") || input.includes("change")) {
+        if (input.includes("cancel") || input.includes("change") || input.includes("complaint")) {
             if (!selectedOrder) {
                 const message: Message = {
                     sender: 'bot',
@@ -99,6 +91,8 @@ const Chatbot: React.FC = () => {
                 };
                 botMessages.push(message);
                 setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+                setIsTyping(false); // Bot has finished typing
+                setInput('show me my orders');
                 return
             }
             if (!token) {
@@ -108,10 +102,10 @@ const Chatbot: React.FC = () => {
                 };
                 botMessages.push(message);
                 setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+                setIsTyping(false); // Bot has finished typing
+                setInput('');
                 return
             }
-
-            
 
             socket.emit('sendMessage', { message: input, order_id: selectedOrder, token });
 
@@ -154,13 +148,11 @@ const Chatbot: React.FC = () => {
 
     const handleAddressClick = async (newAddress: any) => {
         setIsTyping(true); // Bot has started typing
-        console.log({ newAddress });
         const userMessage: Message = { sender: 'user', message: newAddress.area };
         setMessages([...messages, userMessage]);
         setSelectedAddress(newAddress);
         //  call api here 
         const response = await orderAddressUpdate(token, selectedOrder, { newAddress })
-        console.log({ response, msg: response?.data?.message });
         const message: Message = {
             sender: 'bot',
             message: response?.data?.message,
