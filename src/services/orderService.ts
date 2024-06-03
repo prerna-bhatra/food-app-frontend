@@ -62,3 +62,18 @@ export const orderStatusUpdate = async (token: string , orderId:number ,formData
         return { error }
     }
 }
+
+export const orderAddressUpdate = async (token: string , orderId:number ,formData:any ) => {
+    try {
+        const response = await axiosInstance.post(`/order/change_address/${orderId}`,formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        return { data: response.data, status: response.status }
+
+    } catch (error) {
+        console.error('Error :', error);
+        return { error }
+    }
+}

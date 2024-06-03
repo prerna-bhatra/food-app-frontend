@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import socket from './socket';
 import { useSelector } from 'react-redux';
+import { orderAddressUpdate } from './services/orderService';
 
 interface Message {
     sender: 'user' | 'bot';
     message: string;
     orders?: any[]; // Adding orders property to the Message interface
+    userSavedAddress?: any[];
 }
+
+
 
 const Chatbot: React.FC = () => {
     const { token } = useSelector((state: any) => state.auth);
+    const savedAddress = useSelector((state: any) => state.address);
+    console.log({ savedAddress });
+
+
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
-    const [selectedOrder, setSelectedOrder] = useState('');
+    const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
     useEffect(() => {
         socket.on('botReply', (data: { text?: string, custom?: any, orders?: any[] }[]) => {
             let botMessages: Message[] = [];
 
+
+            console.log({ data });
+
             if (!data.length) {
                 const message: Message = {
                     sender: 'bot',
-                    message: 'orders not found', // No message for custom data
+                    message: 'orders not found or something went wrong', // No message for custom data
                 };
                 botMessages.push(message)
 
@@ -34,6 +45,14 @@ const Chatbot: React.FC = () => {
                         message: msg.text,
                     };
                     botMessages.push(message);
+                    if (msg.text === "Please select address from below") {
+                        const message: Message = {
+                            sender: 'bot',
+                            message: '',
+                            userSavedAddress: savedAddress?.addresses,
+                        };
+                        botMessages.push(message);
+                    }
                 } else if (msg.custom) {
                     // If bot sends custom data
                     const message: Message = {
@@ -72,7 +91,7 @@ const Chatbot: React.FC = () => {
         const userMessage: Message = { sender: 'user', message: input };
         setMessages([...messages, userMessage]);
         const botMessages: Message[] = [];
-        if (input.includes("cancel")) {
+        if (input.includes("cancel") || input.includes("change")) {
             if (!selectedOrder) {
                 const message: Message = {
                     sender: 'bot',
@@ -91,6 +110,9 @@ const Chatbot: React.FC = () => {
                 setMessages((prevMessages) => [...prevMessages, ...botMessages]);
                 return
             }
+
+            
+
             socket.emit('sendMessage', { message: input, order_id: selectedOrder, token });
 
         }
@@ -114,8 +136,6 @@ const Chatbot: React.FC = () => {
     };
 
     const handleOrderClick = (order: any) => {
-
-        // Handle order click here, e.g., dispatch an action, open a modal, etc.
         const userMessage: Message = { sender: 'user', message: order.id };
         setSelectedOrder(order.id);
         setMessages([...messages, userMessage]);
@@ -126,13 +146,34 @@ const Chatbot: React.FC = () => {
         const botMessages: Message[] = [];
         botMessages.push(message);
         setMessages((prevMessages) => [...prevMessages, ...botMessages]);
-
         // socket.emit('sendMessage', { message: order.id });
-
     };
 
+    const [selectedAddress, setSelectedAddress] = useState<any>();
+
+
+    const handleAddressClick = async (newAddress: any) => {
+        setIsTyping(true); // Bot has started typing
+        console.log({ newAddress });
+        const userMessage: Message = { sender: 'user', message: newAddress.area };
+        setMessages([...messages, userMessage]);
+        setSelectedAddress(newAddress);
+        //  call api here 
+        const response = await orderAddressUpdate(token, selectedOrder, { newAddress })
+        console.log({ response, msg: response?.data?.message });
+        const message: Message = {
+            sender: 'bot',
+            message: response?.data?.message,
+        };
+        const botMessages: Message[] = [];
+        botMessages.push(message);
+        setMessages((prevMessages) => [...prevMessages, ...botMessages]);
+        setIsTyping(false); // Bot has finished typing
+
+    }
+
     return (
-        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg" >
+        <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg" style={{"width":"400px"}} >
             <h2 className="text-2xl mb-4">Chatbot</h2>
             <div className="border border-gray-300 p-4 h-96 overflow-y-auto mb-4">
                 <div className="text-left">
@@ -161,11 +202,32 @@ const Chatbot: React.FC = () => {
                             <p><strong>{msg.sender}:</strong> {msg.message}</p>
                         )}
 
+                        {
+                            msg?.userSavedAddress ? (
+                                <div>
+                                    <ul>
+                                        {
+                                            msg.userSavedAddress.map((addressItem, index) => (
+                                                <li key={index} className="cursor-pointer text-blue-500" onClick={() => handleAddressClick(addressItem)}>
+                                                    <div>
+                                                        <p>{addressItem.area}</p>
+                                                    </div>
+                                                </li>
+
+                                            ))
+                                        }
+                                    </ul>
+                                </div>
+                            ) : null
+                        }
+
                     </div>
                 ))}
                 {isTyping && (
                     <div className="text-left">
-                        <p><strong>Bot:</strong> typing...</p>
+                        <p>
+                            <strong>Bot:</strong> <span className="text-[#90EE90]">typing...</span>
+                        </p>
                     </div>
                 )}
             </div>

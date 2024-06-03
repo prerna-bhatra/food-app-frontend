@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MapComponent from './MapComponent';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AddressForm from './AddressForm';
@@ -9,8 +9,11 @@ import { FaSpinner } from 'react-icons/fa';
 import SeacrhAddress from './SeacrhAddress';
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
 import { fetchAddress } from '../services/googleApiService';
+import { setAddressesAction } from '../actions/addressActions';
 
 const Location = (props: any) => {
+    const dispatch = useDispatch(); // Initialize useDispatch
+
     const { token } = useSelector((state: any) => state.auth);
 
     const [searchInput, setSearchInput] = useState('');
@@ -41,6 +44,7 @@ const Location = (props: any) => {
         userSavedAddress(token).then((response: any) => {
             setLoading(false);
             setAddresses(response.data);
+            dispatch(setAddressesAction(response.data));
         }).catch((error) => {
 
         })
@@ -64,8 +68,8 @@ const Location = (props: any) => {
                     setLocationAddress(locationAddress.formatted_address)
 
                     if (locationAddress?.address_components?.length > 1) {
-                        if(props?.onAddressUpdate)
-                        props?.onAddressUpdate(locationAddress.address_components[1].long_name);
+                        if (props?.onAddressUpdate)
+                            props?.onAddressUpdate(locationAddress.address_components[1].long_name);
                     }
                 },
                 (error) => {
