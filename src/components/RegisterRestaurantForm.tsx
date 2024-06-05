@@ -161,7 +161,7 @@ const RegisterRestaurantForm = () => {
                     <div className="col-span-2">
                         <p className='text-[32px] font-bold text-[#ff6d03] text-left'>Register Your Restaurant</p>
                     </div>
-                    <div className="">
+                    <div className={restaurantId?"":"col-span-2"}>
                         <p className='text-[24px] font-bold text-left'>Restaurant Details</p>
                     </div>
 
@@ -180,7 +180,7 @@ const RegisterRestaurantForm = () => {
                             </div>
                         </>
                     ) : null}
-                    
+
                     <div>
                         <label className="block text-sm font-medium text-gray-700 text-left">Restaurant Name</label>
                         <input
@@ -200,8 +200,11 @@ const RegisterRestaurantForm = () => {
                     </div>
 
                     <div className="flex space-x-4 col-span-2">
-                        <input disabled {...register('googleAddress')} type="text" readOnly={true} className="border rounded px-4 py-2 w-full" />
-                        <button type="button" onClick={detectCurrentLocation} className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <input disabled {...register('googleAddress')} type="text" readOnly={true} className="border rounded px-4 py-2 w-3/4" />
+                        <button 
+                        type="button"
+                         onClick={detectCurrentLocation} 
+                        className="w-80 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Detect Location
                         </button>
                     </div>
