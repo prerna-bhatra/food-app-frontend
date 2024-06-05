@@ -56,7 +56,7 @@ const RestaurantDocumentForm = () => {
     };
 
     const imageUpload = async (event: any, imageFor: string) => {
-        const formData = new FormData();        
+        const formData = new FormData();
         formData.append("document", event.target.files[0])
         formData.append("restaurantId", location?.state?.id)
         formData.append("documentType", imageFor)
@@ -75,21 +75,16 @@ const RestaurantDocumentForm = () => {
     }
 
     return (
-        <div className="md:flex justify-center items-center  ">
+        <div className="md:flex px-40  ">
             <ToastContainer />
-            <div className="w-full md:w-1/2">
-                <div className="mb-8 h-full">
-                    <h2 className="text-2xl font-bold mb-4">Steps</h2>
-                    {/* Add steps here */}
-                </div>
-            </div>
-            <div className="w-full md:w-1/2">
+
+            <div className="w-full ">
                 <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 shadow-md rounded-md">
                     <div className="mb-8">
                         <h2 className="text-2xl font-bold mb-4 text-left">PAN Details</h2>
-                        <div className='md:flex  justify-content'>
-                            <div className='w-1/2'>
-                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left"  >
+                        <div className="md:flex">
+                            <div className="w-full md:w-1/2 pr-2">
+                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
                                     Pan Card Number
                                 </label>
                                 <input
@@ -97,69 +92,111 @@ const RestaurantDocumentForm = () => {
                                     type="text" placeholder="PAN Card Number"
                                     className="border rounded px-4 py-2 w-full mb-2" />
                                 {errors.panCardNumber && <span className="text-red-500">Invalid PAN Card Number</span>}
-                            </div>
-                            <div className='w-1/2'>
-                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left"  >
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
                                     Pan Card Name
                                 </label>
-                                <input {...register('panCardName', { required: true })} type="text" placeholder="PAN Card Name" className="border rounded px-4 py-2 w-full mb-4 " />
+                                <input {...register('panCardName', { required: true })} type="text" placeholder="PAN Card Name" className="border rounded px-4 py-2 w-full mb-2" />
                                 {errors.panCardName && <span className="text-red-500">PAN Card Name is required</span>}
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
+                                    Pan Card Address
+                                </label>
+                                <input {...register('panCardAddress', { required: true })} type="text" placeholder="PAN Card Address" className="border rounded px-4 py-2 w-full mb-2" />
+                                {errors.panCardAddress && <span className="text-red-500">PAN Card Address is required</span>}
+                            </div>
+                            <div className="w-full md:w-1/2 pl-2">
+                                <div className="mt-4 w-full" style={{
+                                    position: 'relative',
+                                    display: 'inline-block',
+                                    width: '500px',
+                                    height: '200px',
+                                    color: '#ff6d03',
+                                    border: '1px solid #ff6d03',
+                                    borderRadius: '5px',
+                                    padding: '10px 20px',
+                                    cursor: 'pointer',
+                                    textAlign: 'center'
+                                }}>
+                                    <label htmlFor="pan-upload" style={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                    }}>
+                                        + Upload Pan Card Image
+                                    </label>
+                                    <input
+                                        id="pan-upload"
+                                        {...register('panCardImage')}
+                                        name='document'
+                                        type="file"
+                                        onChange={(e) => imageUpload(e, 'panCardImage')}
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 0,
+                                            opacity: 0,
+                                            cursor: 'pointer',
+                                            width: '100%',
+                                            height: '100%'
+                                        }}
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="mb-8">
+                        <h2 className="text-2xl font-bold mb-4 text-left">FSSAI  Details</h2>
+                        <div className="md:flex">
+                            <div className="w-full md:w-1/2 pr-2">
+                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
+                                    FSSAI Number
+                                </label>
+                                <input {...register('fssaiNumber', { required: true })} type="text" placeholder="FSSAI Number" className="border rounded px-4 py-2 w-full mb-2" />
+                                {errors.fssaiNumber && <span className="text-red-500">FSSAI Number is required</span>}
+
+                                <label className="block text-gray-700 text-sm font-bold mb-2 text-left">
+                                    FSSAI Expiry Date
+                                </label>
+                                <input {...register('fssaiExpiryDate', { required: true })} type="date" placeholder="FSSAI Expiry Date" className="border rounded px-4 py-2 w-full mb-2" />
+                                {errors.fssaiExpiryDate && <span className="text-red-500">FSSAI Expiry Date is required</span>}
+                            </div>
+                            <div className="w-full md:w-1/2 pl-2">
+                                <div
+                                    className="mt-4 w-full" style={{
+                                        position: 'relative',
+                                        display: 'inline-block',
+                                        width: '500px',
+                                        height: '130px',
+                                        color: '#ff6d03',
+                                        border: '1px solid #ff6d03',
+                                        borderRadius: '5px',
+                                        padding: '10px 20px',
+                                        cursor: 'pointer',
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    <label htmlFor="fssai-upload"
+                                        style={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                        }}>
+                                        + Add FSSAI Certificate
+                                    </label>
+                                    <input
+                                        id="fssai-upload"
+                                        {...register('fssaiImage')}
+                                        name='document' type="file" onChange={(e) => imageUpload(e, 'fssaiImage')} style={{ position: 'absolute', left: 0, top: 0, opacity: 0, cursor: 'pointer', width: '100%', height: '100%' }} />
+                                </div>
                             </div>
                         </div>
-
-                        <label className="block text-gray-700 text-sm font-bold mb-2 text-left"  >
-                            Pan Card Address
-                        </label>
-
-                        <input {...register('panCardAddress', { required: true })} type="text" placeholder="PAN Card Address" className="border rounded px-4 py-2 w-full mb-2" />
-                        {errors.panCardAddress && <span className="text-red-500">PAN Card Address is required</span>}
-
-                        <div className='mt-4 w-full' style={{ position: 'relative', display: 'inline-block' }}>
-                            <label htmlFor="file-upload"
-                                style={{
-                                    backgroundColor: '#f6f9fd',
-                                    color: '#0d448d',
-                                    border: '1px solid #0d448d',
-                                    borderRadius: '5px',
-                                    padding: '10px 20px', cursor: 'pointer'
-                                }}>
-                                Upload PAN Card Image
-                            </label>
-                            <input
-                                id="file-upload"
-                                {...register('panCardImage')}
-                                name='document' type="file" onChange={(e) => imageUpload(e, 'panCardImage')} style={{ position: 'absolute', left: 0, top: 0, opacity: 0, cursor: 'pointer', width: '100%', height: '100%' }} />
-                        </div>
                     </div>
                     <div className="mb-8">
-                        <h2 className="text-2xl font-bold mb-4">FSSAI Details</h2>
-                        {/* FSSAI input fields */}
-                        <input {...register('fssaiNumber', { required: true })} type="text" placeholder="FSSAI Number" className="border rounded px-4 py-2 w-full mb-2" />
-                        {errors.fssaiNumber && <span className="text-red-500">FSSAI Number is required</span>}
-                        <input {...register('fssaiExpiryDate', { required: true })} type="date" placeholder="FSSAI Expiry Date" className="border rounded px-4 py-2 w-full mb-2" />
-                        {errors.fssaiExpiryDate && <span className="text-red-500">FSSAI Expiry Date is required</span>}
-                        <div className='mt-4 w-full' style={{ position: 'relative', display: 'inline-block' }}>
-                            <label htmlFor="file-upload"
-                                style={{
-                                    backgroundColor: '#f6f9fd',
-                                    color: '#0d448d',
-                                    border: '1px solid #0d448d',
-                                    borderRadius: '5px',
-                                    padding: '10px 20px', cursor: 'pointer'
-                                }}>
-                                Upload FSSAI Certificate
-                            </label>
-                            <input
-                                id="file-upload"
-                                {...register('fssaiImage')}
-                                name='document' type="file" onChange={(e) => imageUpload(e, 'panCardImage')} style={{ position: 'absolute', left: 0, top: 0, opacity: 0, cursor: 'pointer', width: '100%', height: '100%' }} />
-                        </div>
-                        {/* <input {...register('fssaiImage')} type="file" className="border rounded px-4 py-2 w-full mb-2" name='image' onChange={(e: any) => imageUpload(e, 'fssaiImage')}
-                        /> */}
-                    </div>
-                    <div className="mb-8">
-                        <h2 className="text-2xl font-bold mb-4">Bank Account Details</h2>
-                        {/* Bank account input fields */}
+                        <h2 className="text-2xl font-bold mb-4 text-left">Bank  Details</h2>
                         <input {...register('bankAccountNumber', { required: true })} type="text" placeholder="Bank Account Number" className="border rounded px-4 py-2 w-full mb-2" />
                         {errors.bankAccountNumber && <span className="text-red-500">Bank Account Number is required</span>}
 
@@ -169,23 +206,23 @@ const RestaurantDocumentForm = () => {
                             <option value="current">Current</option>
                         </select>
                         {errors.accountType && <span className="text-red-500">Account Type is required</span>}
-                        <input {...register('ifscCode', { required: true })} type="text" placeholder="IFSC Code" className="border rounded px-4 py-2 w-full mb-2"
-                        />
+                        <input {...register('ifscCode', { required: true })} type="text" placeholder="IFSC Code" className="border rounded px-4 py-2 w-full mb-2" />
                         {errors.ifscCode && <span className="text-red-500">IFSC Code is required</span>}
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-end">
                         <button type="button"
                             onClick={() => {
                                 navigate("/partner-with-us", {
                                     state: { resId: restaurantId }
                                 })
                             }}
-                            className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Back</button>
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Save</button>
+                            className="mr-4 bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white w-60"> Back</button>
+                        <button type="submit" className="mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 w-60"> Save</button>
                     </div>
                 </form>
-
             </div>
+
+
         </div>
     );
 };
