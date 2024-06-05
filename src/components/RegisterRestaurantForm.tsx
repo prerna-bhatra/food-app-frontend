@@ -155,121 +155,140 @@ const RegisterRestaurantForm = () => {
     return (
         <div className="p-4">
             <ToastContainer />
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4  flex flex-col md:flex-row  ">
-                <div className='md:w-1/4'>
-                    STEPS
-                </div>
-                <div className='gap-4 md:w-1/2 md:grid md:grid-cols-2'>
-                    {
-                        restaurantId ? (
-                            <>
-                                <div></div>
-                                <div className='flex justify-end'>
-                                    <button onClick={() => {
-                                        setIsEdit(!isEdit)
-                                    }} type="button" className=" inline-flex  py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-900">
-                                        {
-                                            isEdit ? (
-                                                <>Cancel</>
-                                            ) : (
-                                                <>
-                                                    <FaPen className='mr-2' />
-                                                    Edit
-                                                </>
-                                            )
-                                        }
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col px-40 w-full">
+                <div className='gap-4 grid grid-cols-1 md:grid-cols-2'>
 
-                                    </button>
-                                </div>
-                            </>
-                        ) : null
-                    }
+                    <div className="col-span-2">
+                        <p className='text-[32px] font-bold text-[#ff6d03] text-left'>Register Your Restaurant</p>
+                    </div>
+                    <div className="">
+                        <p className='text-[24px] font-bold text-left'>Restaurant Details</p>
+                    </div>
 
+                    {restaurantId ? (
+                        <>
+                            {/* <div></div> */}
+                            <div className='flex justify-end'>
+                                <button onClick={() => {
+                                    setIsEdit(!isEdit)
+                                }} type="button" className="inline-flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-900">
+                                    {isEdit ? <>Cancel</> : <>
+                                        <FaPen className='mr-2' />
+                                        Edit
+                                    </>}
+                                </button>
+                            </div>
+                        </>
+                    ) : null}
+                    
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Restaurant Name</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Restaurant Name</label>
                         <input
                             disabled={!isEdit}
                             {...register('name', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.name && <span className="text-red-500">Restaurant Name is required</span>}
                     </div>
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Complete Address</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Complete Address</label>
                         <input
                             disabled={!isEdit}
                             {...register('completeAddress', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.completeAddress && <span className="text-red-500">Complete Address is required</span>}
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Contact Name</label>
-                        <input disabled={!isEdit} {...register('contactName', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
-                        />
-                        {errors.contactName && <span className="text-red-500">Contact Name is required</span>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Contact Number</label>
-                        <input disabled={!isEdit} maxLength={10} {...register('contactNumber', { required: true })} type="number" className="border rounded px-4 py-2 w-full"
-                        />
-                        {errors.contactNumber && <span className="text-red-500">Contact Number is required</span>}
-                    </div>
-                    <div className="flex space-x-4">
+
+                    <div className="flex space-x-4 col-span-2">
                         <input disabled {...register('googleAddress')} type="text" readOnly={true} className="border rounded px-4 py-2 w-full" />
-                        <button type="button" onClick={detectCurrentLocation}>
+                        <button type="button" onClick={detectCurrentLocation} className="py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Detect Location
                         </button>
                     </div>
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Country</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Country</label>
                         <input disabled {...register('country', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.country && <span className="text-red-500">Country is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Pincode</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Pincode</label>
                         <input disabled {...register('pincode', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.pincode && <span className="text-red-500">Pincode is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">State</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">State</label>
                         <input disabled {...register('state', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.state && <span className="text-red-500">State is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">City</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">City</label>
                         <input disabled {...register('city', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.city && <span className="text-red-500">City is required</span>}
                     </div>
 
+                    <div className="col-span-2">
+                        <p className='text-[24px] font-bold text-left'>Staff Details</p>
+                    </div>
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Owner Name</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Manager Name</label>
+                        <input disabled={!isEdit} {...register('contactName', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
+                        />
+                        {errors.contactName && <span className="text-red-500">Manager Name is required</span>}
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Manager's Phone Number</label>
+                        <input disabled={!isEdit} maxLength={10} {...register('contactNumber', { required: true })} type="number" className="border rounded px-4 py-2 w-full"
+                        />
+                        {errors.contactNumber && <span className="text-red-500">Manager's Phone Number is required</span>}
+                    </div>
+
+                    {/*================== Buttons=================== */}
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Owner Email Address</label>
+                        <input disabled={!isEdit} {...register('ownerEmail', { required: true })} type="email" className="border rounded px-4 py-2 w-full"
+                        />
+                        {errors.ownerEmail && <span className="text-red-500">Owner Email is required</span>}
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Owner Name</label>
                         <input {...register('ownerName', { required: true })} type="text" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.ownerName && <span className="text-red-500">Owner Name is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Owner Contact</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Owner's Phone Number</label>
                         <input maxLength={10} {...register('ownerContact', { required: true })} type="number" className="border rounded px-4 py-2 w-full"
                         />
-                        {errors.ownerContact && <span className="text-red-500">Owner Contact is required</span>}
+                        {errors.ownerContact && <span className="text-red-500">Owner's Phone number is required</span>}
                     </div>
+
+                    <div className="col-span-2">
+                        <p className='text-[24px] font-bold text-left'>Cuisine Details</p>
+                    </div>
+
+
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Start Time</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Start Time</label>
                         <input {...register('startTime', { required: true })} type="time" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.startTime && <span className="text-red-500">Start Time is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">End Time</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">End Time</label>
                         <input {...register('endTime', { required: true })} type="time" className="border rounded px-4 py-2 w-full"
                         />
                         {errors.endTime && <span className="text-red-500">End Time is required</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Establishment Type</label>
+                        <label className="block text-sm font-medium text-gray-700 text-left">Establishment Type</label>
                         <select disabled={!isEdit} {...register('establishmentType', { required: true })} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="dine">Dine</option>
                             <option value="online">Online</option>
@@ -278,28 +297,11 @@ const RegisterRestaurantForm = () => {
                         {errors.establishmentType && <span className="text-red-500">Establishment Type is required</span>}
                     </div>
 
+
+
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Owner Email</label>
-                        <input disabled={!isEdit} {...register('ownerEmail', { required: true })} type="email" className="border rounded px-4 py-2 w-full"
-                        />
-                        {errors.ownerEmail && <span className="text-red-500">Owner Email is required</span>}
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Cuisines</label>
-                        <div className=" grid grid-cols-2">
-                            <label className="inline-flex items-center">
-                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Italian" className="form-checkbox text-indigo-600 h-5 w-5" />
-                                <span className="ml-2">Italian</span>
-                            </label>
-                            <label className="inline-flex items-center">
-                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
-                                <span className="ml-2">Mexican</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">Cuisines</label>
-                        <div className="grid grid-cols-2">
+                        <label className="block text-sm font-medium text-gray-700 text-left">Open Days</label>
+                        <div className="grid grid-cols-4">
                             {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(day => (
                                 <label key={day} className="inline-flex items-center">
                                     <input
@@ -317,34 +319,94 @@ const RegisterRestaurantForm = () => {
                         </div>
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Outlet Description</label>
-                        <textarea {...register('outletDescription', { required: true })} className="border rounded px-4 py-2 w-full"
+                        <label className="block text-sm font-medium text-gray-700 text-left">Available Cuisines</label>
+                        <div className="grid grid-cols-3">
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Italian" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Italian</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Mexican</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">North Indian</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Chinese</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">South Indian</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Japanese</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Thai</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Punjabi</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">American</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Bengali</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">British</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Vietnamese</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">German</span>
+                            </label>
+                            <label className="inline-flex items-center">
+                                <input disabled={!isEdit} {...register('cuisines')} type="checkbox" value="Mexican" className="form-checkbox text-indigo-600 h-5 w-5" />
+                                <span className="ml-2">Brazilian</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div className="">
+                        <label className="block text-sm font-medium text-gray-700 text-left"> Description</label>
+                        <textarea rows={4} {...register('outletDescription', { required: true })} className="border rounded px-4 py-2 w-full"
                         ></textarea>
                         {errors.outletDescription && <span className="text-red-500">Outlet Description is required</span>}
                     </div>
-                    <div>
 
-                    </div>
-                    <div className="flex justify-end">
+                    <div className="col-span-2 flex justify-end">
                         <button type="button"
                             onClick={() => {
                                 navigate("/my-restaurants")
                             }}
-                            className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"> Back</button>
-                        <button type="submit" className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                            className="mr-4 bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white w-60">
+                            Back
+                        </button>
+                        <button type="submit" className="mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 w-60">
                             {registerLoading && (
                                 <FaSpinner className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-spin" />
                             )}
-                            {!registerLoading ? (
-                                ' Next'
-                            ) : (
-                                null
-                            )}
+                            {!registerLoading ? 'Next' : null}
                         </button>
                     </div>
-                </div>
 
+
+                </div>
             </form>
+
+
         </div>
     );
 };
