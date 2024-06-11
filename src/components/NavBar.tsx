@@ -118,8 +118,10 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="flex items-center space-x-4">
-              <Link to="/login" className="text-white font-bold">Login</Link>
-              <Link to="/signup" className="text-white font-bold">Signup</Link>
+              <Link to="/login" className="text-[#FFFFFF] text-[16px] ">Login</Link>
+              <Link to="/signup" className="text-white font-bold  ">
+                <img className='h-10' src={"/images/signup.png"} />
+              </Link>
             </div>
           )}
         </div>
@@ -128,14 +130,19 @@ const Navbar: React.FC = () => {
         !pathsThatInludesOnlyProfile.includes(location.pathname) ? (
           <>
             <div className="mt-40 md:pl-20 px-4">
-              <h1 className="text-white text-2xl md:text-3xl mb-10">Discover the Delicious Difference</h1>
+              <h1 className="text-white text-[32px] md:text-3xl mb-10 font-bold">Discover the Delicious Difference</h1>
               <div className="md:flex md:items-center">
                 <input
                   onChange={(e) => handleSearch(e.target.value)}
                   type="text"
                   placeholder="Search your favorite food"
-                  className="border border-gray-300 px-4 py-2 rounded-[40px] focus:outline-none mt-5 md:mt-0 w-full md:w-auto md:flex-grow h-[54px]"
+                  className="border border-gray-300 
+                  px-[32px] py-4 rounded-[40px] 
+                  focus:outline-none mt-5
+                   md:mt-0 w-full md:w-auto md:flex-grow 
+                   h-[54px]::placeholder text-gray-400 text-[16px] text-[#1F1F1F]"
                 />
+
                 {token && (
                   <div className="relative mt-5 md:mt-0 md:ml-2 w-full md:w-auto">
                     <button
