@@ -120,7 +120,7 @@ const Navbar: React.FC = () => {
             <div className="flex items-center space-x-4">
               <Link to="/login" className="text-[#FFFFFF] text-[16px] ">Login</Link>
               <Link to="/signup" className="text-white font-bold  ">
-                <img className='h-10' src={"/images/signup.png"} />
+                <img className='h-15' src={"/images/signup.png"} />
               </Link>
             </div>
           )}

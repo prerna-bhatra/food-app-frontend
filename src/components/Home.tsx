@@ -1,6 +1,10 @@
 
 import React, { useState } from 'react';
 import MainService from './MainService';
+import Footer from './Footer';
+import AppSection from './AppSection';
+import CategoriesSection from './CategoriesSection';
+import PopularSection from './PopularSection';
 
 
 const Home: React.FC = () => {
@@ -9,6 +13,10 @@ const Home: React.FC = () => {
     return(
         <div>
             <MainService/>
+            <PopularSection/>
+            <CategoriesSection/>
+            <AppSection/>
+            <Footer/>
         </div>
     )
 
