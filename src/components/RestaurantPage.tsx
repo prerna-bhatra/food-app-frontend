@@ -69,21 +69,27 @@ const RestaurantPage = () => {
         return <div>Loading...</div>;
     }
 
-    const { name, completeAddress, Menus } = restaurant;
+    const { name, completeAddress, Menus, city ,cuisines } = restaurant;
     const firstMenuImage = Menus?.length ? Menus[0].dishImage : '';
 
+    // console.log({cuisines});
+    
     return (
-        <div className="container md:mx-auto mt-10 md:px-40">
+        <div className="container md:mx-auto  md:px-40">
             {firstMenuImage && (
                 <img
                     src={firstMenuImage}
                     alt="Restaurant"
-                    className="w-full h-64 object-cover mb-8 rounded-lg"
+                    className="w-full h-[473px] object-cover mb-8"
                 />
             )}
-            <div className="bg-white  md:p-6 rounded-lg shadow-md mb-8">
-                <h2 className="text-3xl font-bold mb-4">{name}</h2>
-                <p className="text-gray-700 mb-4">{completeAddress}</p>
+            <div className="bg-white  rounded-lg shadow-md mb-8">
+                <div className='flex'>
+                    <h2 className="text-[32px] font-bold mb-4 text-left">{name}</h2>
+                    <img src={"/images/ratings.png"} className='h-6 ml-4 mt-4' />
+                </div>
+                <p className="text-gray-700 mb-2 text-left">{completeAddress} , {city}</p>
+                <p className='text-gray-700 mb-4 text-left'>{cuisines.join(",") }</p>
             </div>
             <div className="mt-8 md:flex">
                 <div className="md:flex-grow md:grid  md:grid-cols-2 md:gap-6 sm:grid-cols-1 ">

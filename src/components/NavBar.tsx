@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
                 onClick={toggleDropdown}
                 className="relative flex items-center justify-center bg-transparent text-gray-800  px-4 py-2 focus:outline-none"
               >
-                <span className='text-white font-bold bg-[#FF6D03] rounded-[100%] p-2'>
+                <span className='text-[#FF6D03] font-bold  rounded-[100%] p-2 bg-white'>
                   {user.name.split(" ")[0].charAt(0).toUpperCase()}
                   {user.name.split(" ")[user.name.split(" ").length - 1].charAt(0).toUpperCase()}
                 </span>

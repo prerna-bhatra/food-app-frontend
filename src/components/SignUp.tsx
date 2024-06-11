@@ -28,6 +28,12 @@ const SignupForm: React.FC = () => {
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -84,16 +90,31 @@ const SignupForm: React.FC = () => {
                 Password:
               </label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 id="password"
                 {...register("password", { required: true, minLength: 6 })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               />
               {errors.password && <p className="text-red-500">Password must be at least 6 characters long</p>}
             </div>
+            <div className="mb-4 flex justify-between">
+              <div>
+                <input
+                  type="checkbox"
+                  id="show-password"
+                  checked={showPassword}
+                  onChange={handleCheckboxChange}
+                  className="mr-2 "
+                />
+                <label htmlFor="show-password" className="text-sm text-[#888888]">Show Password</label>
+              </div>
+              <Link to="/forgot-password" className="text-sm hover:underline text-[#888888] ">
+                Fortgot password ?
+              </Link>
+            </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue relative"
+              className="mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 w-full"
             >
               {loading && (
                 <FaSpinner className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-spin" />
@@ -105,8 +126,8 @@ const SignupForm: React.FC = () => {
               )}
             </button>
             <p className="mt-4 text-center mb-4">
-              Already have an account?
-              <Link to="/login" className="text-blue-500 hover:underline">
+              Already have an account ?
+              <Link to="/login" className="text-[#FF6D03] hover:underline ml-3">
                 Log In
               </Link>
             </p>
