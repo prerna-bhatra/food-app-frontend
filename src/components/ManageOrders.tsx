@@ -74,7 +74,7 @@ const ManageOrders = () => {
 
                         <div className='flex justify-between mb-2'>
                             <h2 className="text-lg font-semibold text-[#ff6d03]">Order # {order.id}</h2>
-                            <p>{order.orderStatus}</p>
+                            <p className='text-[#D0AF00]'>{order.orderStatus}</p>
                         </div>
 
                         <div className='flex mb-2'>
