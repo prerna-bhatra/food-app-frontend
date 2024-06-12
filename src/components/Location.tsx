@@ -10,6 +10,7 @@ import SeacrhAddress from './SeacrhAddress';
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
 import { fetchAddress } from '../services/googleApiService';
 import { setAddressesAction } from '../actions/addressActions';
+import { capitalizeEachWord } from './commonFunction';
 
 const Location = (props: any) => {
     const dispatch = useDispatch(); // Initialize useDispatch
@@ -138,11 +139,11 @@ const Location = (props: any) => {
                                                 <span className="font-bold">{address.addressType}</span>
                                             </div>
                                             <div >
-                                                <div>
-                                                    {address.houseName + ", "}
-                                                    {address.area + ", "}
-                                                    {address.landmark + address.landmark ? ", " : ""}
-                                                    {address.googleAddress}
+                                                <div className='text-left'>
+                                                    {capitalizeEachWord(address.houseName || '') + ", "}
+                                                    {capitalizeEachWord(address.area || '') + ", "}
+                                                    {address.landmark + capitalizeEachWord(address.landmark || '') ? ", " : ""}
+                                                    {capitalizeEachWord(address.googleAddress || '')}
 
                                                 </div>
                                             </div>

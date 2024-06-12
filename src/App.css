@@ -37,7 +37,9 @@
 }
 
 .main-nav-bar{
- background-color:#FF6D03 ;
+ background-color:white ;
+ border: none;
+ /* box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1) !important; */
   
 }
 

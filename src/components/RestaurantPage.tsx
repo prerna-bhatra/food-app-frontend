@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { restaurantById } from '../services/restaurentService';
 import Cart from './Cart';
 import Location from './Location';
+import { capitalizeEachWord } from './commonFunction';
 
 const RestaurantPage = () => {
     const location = useLocation();
@@ -78,18 +79,31 @@ const RestaurantPage = () => {
                 <img
                     src={firstMenuImage}
                     alt="Restaurant"
-                    className="w-full h-[473px] object-cover mb-8"
+                    className="w-full h-[473px] object-cover mb-6"
                 />
             )}
-            <div className="bg-white  rounded-lg  mb-8">
-                <div className='flex'>
-                    <h2 className="text-[32px] font-bold mb-4 text-left">{name}</h2>
-                    <img src={"/images/ratings.png"} className='h-6 ml-4 mt-4' />
-                </div>
-                <p className="text-gray-700 mb-2 text-left">{completeAddress} , {city}</p>
-                <p className='text-gray-700 mb-4 text-left'>{cuisines?.join(",")}</p>
+            <div className="bg-white  rounded-lg ">
+                <div className='flex justify-between'>
+                    <div className='flex'>
+                        <h2 className="text-[32px] font-bold text-left mb-1">{capitalizeEachWord(name)}</h2>
+                        <img src={"/images/ratings.png"} className='h-6 ml-4 mt-4' />
+                    </div>
 
-                <div className="border-b border-[#888888] mb-4"></div>
+                    <p><span className='text-[#FF6D03]'>Open Now</span>  7.00 am - 10.00 pm <span></span></p>
+                </div>
+                <div className='flex justify-between'>
+                    <div>
+                    <p className="text-gray-700 mb-2 text-left">{capitalizeEachWord(completeAddress)} , {capitalizeEachWord(city)}</p>
+                    <p className='text-gray-700  text-left'>{cuisines?.join(" , ")}</p>
+                    </div>
+                    <div className='flex gap-[12px]'>
+                        <img className='h-[54px] w-[154x] cursor-pointer' src={"/images/save.png"} />
+                        <img className='h-[54px] w-[154x] cursor-pointer' src={"/images/share.png"} />
+                    </div>
+                </div>
+
+
+                <div className="border-b border-[#888888] my-10 "></div>
 
             </div>
 
@@ -97,7 +111,7 @@ const RestaurantPage = () => {
                 <div className=" md:grid md:gap-6 grid-cols-1 w-[680px] ">
                     {Menus && Menus.length > 0 ? (
                         Menus.map((menu: any) => (
-                            <div key={menu.id} className="bg-white relative rounded-lg shadow-md  flex justify-start h-[235px]">
+                            <div key={menu.id} className="bg-white relative rounded-[32px] shadow  flex justify-start h-[235px]">
                                 <img
                                     src={menu.dishImage}
                                     alt={menu.dishname}
@@ -106,7 +120,7 @@ const RestaurantPage = () => {
 
                                 <div className='py-6 px-8 flex-grow'>
                                     <div>
-                                        <h4 className="text-xl font-bold mb-2 text-left">{menu.dishname}</h4>
+                                        <h4 className="text-xl font-bold mb-2 text-left">{capitalizeEachWord(menu.dishname)}</h4>
                                         <div className='flex justify-between'>
                                             <p className="text-gray-600 mb-2 text-left" >₹{menu.price} for one</p>
                                             <img src={"/images/ratings.png"} className='h-6 ml-4 mt-4' />
@@ -121,7 +135,7 @@ const RestaurantPage = () => {
                                         </button>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         ))
                     ) : (

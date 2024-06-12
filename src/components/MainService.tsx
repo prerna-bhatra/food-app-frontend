@@ -11,43 +11,34 @@ const MainService = () => {
     };
 
     return (
-        <div className='px-4 md:px-20 lg:px-40 relative'>
-            <h1 className='text-2xl md:text-3xl lg:text-4xl mb-6 mt-6 lg:mb-10 lg:mt-10 font-extrabold	'>
-                Explore the Best In Pune
-            </h1>
-            <div className='flex flex-wrap lg:flex-nowrap justify-center mt-4 mx-auto gap-5'>
-                <div className="w-full sm:w-1/2 lg:w-1/3 rounded overflow-hidden shadow-lg mb-8 rounded-[40px]">
-                    <img src={"https://desibaniye.com/wp-content/uploads/2022/02/chole-chawal.jpg"} className="w-full rounded-[40px]" alt="Order Online" />
-                    <div className="px-4 pt-[24px] pb-[32px]">
-                        <div className="font-bold text-lg md:text-xl lg:text-2xl mb-2 text-[#FF6D03]">Order Online</div>
-                        <p className="text-gray-700 text-base">Stay home and order to your doorstep</p>
-                    </div>
-                </div>
-                <div className="w-full sm:w-1/2 lg:w-1/3 rounded overflow-hidden shadow-lg mb-8 rounded-[40px]">
-                    <img src={"https://assets-global.website-files.com/6408d629de5aef8ce5e31f88/6447c134d057b24092dbb5e9_night-themed-blog.webp"} className="w-full rounded-[40px]" alt="Dining" />
-                    <div className="px-4 pt-[24px] pb-[32px]">
-                        <div className="font-bold text-lg md:text-xl lg:text-2xl mb-2 text-[#FF6D03]">Dining</div>
-                        <p className="text-gray-700 text-base">View the city's favourite venues</p>
-                    </div>
-                </div>
-                <div className="w-full sm:w-1/2 lg:w-1/3 rounded overflow-hidden shadow-lg mb-8 rounded-[40px]">
-                    <img src={"https://static01.nyt.com/images/2023/01/07/multimedia/07safrica-nightlife-3-1-bfb5/07safrica-nightlife-3-1-bfb5-videoSixteenByNine3000.jpg?year=2023&h=1688&w=3000&s=871cfd5c2617692a407b057889a0becfc59b9c5ced99fff2b9322a1dbd00f856&k=ZQJBKqZ0VN&tw=1"} className="w-full rounded-[40px]" alt="Nightlife and Clubs" />
-                    <div className="px-4 pt-[24px] pb-[32px]">
-                        <div className="font-bold text-lg md:text-xl lg:text-2xl mb-2 text-[#FF6D03]">Nightlife and Clubs</div>
-                        <p className="text-gray-700 text-base">Explore the city's top nightlife</p>
-                    </div>
-                </div>
+        <div className="w-[1184px] flex-col justify-start items-center gap-10 inline-flex mt-[72px]">
+            
+        <div className="text-stone-900 text-[32px] font-extrabold font-['Inter'] leading-[42px]">Explore the Best In Pune</div>
+
+        <div className="self-stretch  justify-start items-center gap-6 inline-flex">
+          <div className="grow shrink shadow basis-0 bg-white rounded-[32px] flex-col justify-start items-start inline-flex">
+            <img className="w-[379px] h-[380px] rounded-[32px]" src={"/images/order_online.png"} />
+            <div className="self-stretch  px-4 pt-6 pb-8 flex-col justify-start items-center gap-3 flex">
+              <div className="text-orange-500 text-2xl font-bold font-['Inter'] leading-loose">Order  Online</div>
+              <div className="self-stretch text-center text-stone-900 text-base font-normal font-['Inter'] leading-snug">Stay home and have your order delivered to your doorstep.</div>
             </div>
-
-            <button
-                onClick={toggleChat}
-                className='fixed bottom-4 right-4 bg-blue-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center z-50'
-            >
-                {chatVisible ? <FiX/> : <FiMessageSquare size={24} />}
-            </button>
-
-            {chatVisible && <Chatbot />}
+          </div>
+          <div className="grow shrink shadow basis-0 self-stretch bg-white rounded-[32px] flex-col justify-start items-start inline-flex">
+            <img className="w-[380px] h-[380px] rounded-[32px]" src={"/images/dining.png"} />
+            <div className="self-stretch h-[122px] px-4 pt-6 pb-8 flex-col justify-start items-center gap-3 flex">
+              <div className="text-orange-500 text-2xl font-bold font-['Inter'] leading-loose">Dining</div>
+              <div className="self-stretch text-center text-stone-900 text-base font-normal font-['Inter'] leading-snug">Discover the City's favored location.</div>
+            </div>
+          </div>
+          <div className="grow shrink shadow basis-0 self-stretch bg-white rounded-[32px] flex-col justify-start items-center inline-flex">
+            <img className="w-[380px] h-[380px] rounded-[32px]" src={"/images/night_life.png"} />
+            <div className="self-stretch h-[122px] px-4 pt-6 pb-8 flex-col justify-start items-center gap-3 flex">
+              <div className="text-orange-500 text-2xl font-bold font-['Inter'] leading-loose">Nightlife And Club</div>
+              <div className="self-stretch text-center text-stone-900 text-base font-normal font-['Inter'] leading-snug">Discover the Greatest Nightlife in the City</div>
+            </div>
+          </div>
         </div>
+      </div>
     );
 };
 

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { searchByDishName } from '../services/restaurentService';
 import CommonSearch from './CommonSearch';
+import { capitalizeEachWord } from './commonFunction';
 
 const RestaurantList = () => {
     const navigate = useNavigate()
@@ -65,7 +66,7 @@ const RestaurantList = () => {
                     <div
                         onClick={() => { navigate("/restaurant", { state: { resId: restaurant.id } }) }}
                         key={restaurant.id}
-                        className="bg-white shadow-md rounded-lg overflow-hidden">
+                        className="bg-white shadow-md rounded-[32px] overflow-hidden">
                         {restaurant.Menus.length > 0 && (
                             <img
                                 src={restaurant.Menus[0].dishImage}
@@ -74,11 +75,11 @@ const RestaurantList = () => {
                             />
                         )}
                         <div className="p-4">
-                            <h3 className="text-2xl font-semibold text-left">{restaurant.name}</h3>
+                            <h3 className="text-2xl font-semibold text-left">{capitalizeEachWord(restaurant.name)}</h3>
                             {restaurant.Menus.length > 0 && (
                                 <div className="mt-2 flex justify-between items-center ">
                                     <span className="text-[#888888] text-base">
-                                        {restaurant.Menus[0].dishname}
+                                        {capitalizeEachWord(restaurant.Menus[0].dishname)}
                                     </span>
                                     <span className="text-[#888888] text-base">
                                         ₹{restaurant.Menus[0].price} for one
@@ -86,7 +87,7 @@ const RestaurantList = () => {
                                 </div>
                             )}
                             <div className='flex justify-between items-center'>
-                                <p className="text-[#888888] text-base text-left">{restaurant.completeAddress}</p>
+                                <p className="text-[#888888] text-base text-left">{capitalizeEachWord(restaurant.completeAddress)}</p>
                                 <img src={"/images/ratings.png"} alt="Ratings" />
                             </div>
                         </div>

@@ -8,33 +8,26 @@ const Footer = () => {
                     <div className="self-stretch flex-col justify-between items-start inline-flex">
                         <div className="flex-col justify-start items-start gap-4 flex">
                             <div className="justify-start items-center gap-4 inline-flex">
-                                <div className="w-12 h-12 relative">
-                                    <div className="w-12 h-12 left-0 top-0 absolute bg-orange-500 rounded-full"></div>
-                                </div>
-                                <div className="text-white text-2xl font-bold font-['Inter'] leading-loose">Delish Discoveries</div>
+                                <img src={"/images/logo.png"} />
                             </div>
                             <div className="w-[214px] justify-end items-center gap-4 inline-flex">
-                                <div className="w-6 h-6 relative"></div>
-                                <div className="w-6 h-6 relative"></div>
-                                <div className="w-[30.87px] h-6 relative"></div>
-                                <div className="w-6 h-6 relative"></div>
+                                <img className="w-6 h-6 relative" src={"/images/linkedin.png"} />
+                                <img className="w-6 h-6 relative" src={"/images/twitter.png"} />
+                                <img className="w-6 h-6 relative" src={"/images/discord.png"} />
+                                <img className="w-6 h-6 relative" src={"/images/insta.png"} />
                             </div>
                         </div>
                         <div className="pl-16 justify-start items-start gap-6 inline-flex">
                             <div className="px-2 py-1 bg-slate-700 rounded-[7px] justify-start items-end gap-2 flex">
-                                <img className="w-7 h-7" src="https://via.placeholder.com/28x28" />
-                                <div className="flex-col justify-start items-start inline-flex">
-                                    <div className="text-white text-[8px]  font-['Inter']">Download on the</div>
-                                    <div className="text-white text-base font-medium font-['Inter']">Google Play</div>
-                                </div>
+                                <img className='w-[143px]' src={"/images/playstore.png"} />
+
                             </div>
-                            <div className="h-[37px] px-2 py-1 bg-slate-700 rounded-[7px] justify-center items-center gap-2 flex">
-                                <div className="w-7 h-7 relative"></div>
-                                <div className="flex-col justify-start items-start inline-flex">
-                                    <div className="text-white text-[8px]  font-['Inter']">Download on the</div>
-                                    <div className="text-white text-base font-medium font-['Inter']">App Store</div>
-                                </div>
+
+                            <div className="px-2 py-1 bg-slate-700 rounded-[7px] justify-start items-end gap-2 flex">
+                                <img className='w-[143px]' src={"/images/apple.png"} />
+
                             </div>
+
                         </div>
                     </div>
                     <div className="justify-start items-start gap-[55px] flex">
@@ -75,8 +68,8 @@ const Footer = () => {
                     <div className="text-white text-xs  font-['Almarai'] leading-[18px]">Delish Discoveries, LLC. All rights reserved.</div>
                 </div>
             </div>
-  </div >
-  )
+        </div >
+    )
 }
 
 export default Footer

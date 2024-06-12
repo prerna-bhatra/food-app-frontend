@@ -8,5 +8,5 @@ export const pathsThatInludesOnlyProfile=
 "/restaurant-list",
 "/checkout",
 "/my-orders",
-"/manage-orders"
+"/manage-orders",
 ]
