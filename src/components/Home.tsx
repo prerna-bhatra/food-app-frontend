@@ -16,7 +16,6 @@ const Home: React.FC = () => {
             <PopularSection/>
             <CategoriesSection/>
             <AppSection/>
-            <Footer/>
         </div>
     )
 

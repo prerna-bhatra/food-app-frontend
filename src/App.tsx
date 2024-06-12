@@ -26,13 +26,16 @@ import RestaurantList from "./components/RestaurantList";
 import Checkout from "./components/Checkout";
 import UserOrders from "./components/UserOrders";
 import ManageOrders from "./components/ManageOrders";
+import Footer from "./components/Footer";
 
 
 function App() {
   const { token, user } = useSelector((state: any) => state.auth);
 
   return (
-    <div className="App">
+    <div className="App flex flex-col min-h-[1000px] overflow-hidden">
+      <div className="flex-1">
+
       <Router>
         <Routes>
           <Route element={<WithNavbar />}>
@@ -157,6 +160,9 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </div>
+
+      <Footer/>
     </div>
   );
 }

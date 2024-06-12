@@ -61,30 +61,57 @@ const Cart = (props: any) => {
     }
 
     return (
-        <div>
+        <div className=' py-6 px-8'>
             {
                 items.length > 0 ? (
                     <>
                         <ToastContainer />
-                        <div className='md:max-h-96 overflow-y-scroll p-4'>
-                            <p className='text-center mb-2 font-bold'>Your Cart</p>
+                        <div className='md:max-h-96 overflow-y-scroll p-4 border-bottom'>
+                            <p className=' mb-2 font-bold text-left'>Your Cart</p>
                             {
                                 items.map((item: any, index: number) => (
                                     <div key={item.id} className='mb-4 flex '>
-                                        <img className='w-1/4 mr-4' src={item.dishImage} alt={item.dishName} />
-                                        <div>
-                                            <p className='font-bold'>{item.dishname}</p>
-                                            <p className='text-gray-600'>₹{item.price}</p>
-                                            <div className="flex items-center">
-                                                <button onClick={() => handleDecrement(index)} className="text-gray-500 px-2"><FaMinus /></button>
-                                                <span className="mx-2">{item.quantity}</span>
-                                                <button onClick={() => handleIncrement(index)} className="text-gray-500 px-2"><FaPlus /></button>
+                                        <img className=' h-10 w-10 mr-4' src={item.dishImage} alt={item.dishName} />
+                                        <div className='flex-grow'>
+                                            <div className='flex justify-between'>
+                                                <p className='font-bold text-left'>{item.dishname}</p>
+                                                <button onClick={() => handleDelete(index)} className="text-red-500 px-2 right  "><FaTrash /></button>
+
                                             </div>
+
+                                            <div className='flex justify-between'>
+                                                <p className='text-gray-600 text-left'>₹{item.price} ×  {item.quantity}</p>
+
+                                                <div className="flex items-center">
+                                                    <button onClick={() => handleDecrement(index)} className="text-gray-500 px-2 ">
+                                                        <img src={"/images/minus.png"} className='h-[20px]' />
+                                                    </button>
+                                                    <span className="mx-2">{item.quantity}</span>
+                                                    <button onClick={() => handleIncrement(index)} className="text-gray-500 px-2">
+                                                        <img src={"/images/plus.png"} className='h-[20px]' />
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                            
                                         </div>
-                                        <div>
-                                            <button onClick={() => handleDelete(index)} className="text-red-500 px-2 right"><FaTrash /></button>
+                                        {/* <div className='flex-grow'>
+                                            <p className='font-bold text-left'>{item.dishname}</p>
+                                            <p className='text-gray-600 text-left'>₹{item.price} ×  {item.quantity}</p>
 
                                         </div>
+                                        <div>
+                                            <button onClick={() => handleDelete(index)} className="text-red-500 px-2 right  "><FaTrash /></button>
+                                            <div className="flex items-center">
+                                                <button onClick={() => handleDecrement(index)} className="text-gray-500 px-2 ">
+                                                    <img src={"/images/minus.png"} className='h-[20px]' />
+                                                </button>
+                                                <span className="mx-2">{item.quantity}</span>
+                                                <button onClick={() => handleIncrement(index)} className="text-gray-500 px-2">
+                                                    <img src={"/images/plus.png"} className='h-[20px]' />
+                                                </button>
+                                            </div>
+                                        </div> */}
                                     </div>
                                 ))
                             }
@@ -99,7 +126,7 @@ const Cart = (props: any) => {
                                 // navigate("/checkout")
                                 placeOrder()
                             }}
-                            className='w-full bg-green-800 text-white text-2xl p-3 rounded-[10px]'>Place Order</button>
+                            className='w-full bg-[#FF6D03] text-white text-2xl p-3 rounded-[10px]'>Place Order</button>
                     </>
                 ) : (
                     <div className='p-10'>
