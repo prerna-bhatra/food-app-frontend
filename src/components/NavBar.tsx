@@ -37,6 +37,9 @@ const Navbar: React.FC = () => {
         const uniqueMenus = response?.data?.menus.filter((menu: any, index: number, self: any[]) => (
           index === self.findIndex((m: any) => m.dishname === menu.dishname)
         ));
+
+        console.log({ menus:response?.data?.menus});
+        
         setMenus(uniqueMenus)
       }
     }
@@ -154,7 +157,9 @@ const Navbar: React.FC = () => {
                       }}
                     >
                       <img src="/images/loclogo.png" alt="Location" />
-                      {addressPart}
+                      <p className='text-sm ml-[16px] mr-[32px] text-[#888888]'>
+                      {addressPart?addressPart:"Mumbai"}
+                        </p> 
                       <img src="/images/dropdown.png" alt="Dropdown" />
                     </button>
                     {isOpen && (

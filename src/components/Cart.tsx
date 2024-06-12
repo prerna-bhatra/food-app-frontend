@@ -130,8 +130,8 @@ const Cart = (props: any) => {
                     </>
                 ) : (
                     <div className='p-10'>
-                        <img src='https://cdn.pixabay.com/photo/2014/04/02/10/53/shopping-cart-304843_640.png' alt='Empty Cart' />
-                        <p className='mt-4'>Your cart is empty</p>
+                        {/* <img src='https://cdn.pixabay.com/photo/2014/04/02/10/53/shopping-cart-304843_640.png' alt='Empty Cart' /> */}
+                        <p className='text-base font-bold'>Your cart is empty</p>
                     </div>
                 )
             }

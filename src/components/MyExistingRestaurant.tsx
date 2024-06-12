@@ -33,7 +33,28 @@ const MyExistingRestaurant = () => {
     return (
         <div className="container mx-auto flex  flex-col px-40"> {/* Added flex-col class */}
             <ToastContainer />
-            <h1 className="text-2xl font-bold mb-6 text-left">All Outlets</h1>
+            <div className='mt-4'>
+                <div className='flex justify-between border-b-2 mb-4'>
+                    <h1 className="text-2xl font-bold mb-6 text-left flex-grow">Manage Outlets</h1>
+
+                </div>
+                <div className='flex justify-between'>
+                    <div className='w-[1184px]'>
+                    <h1 className="text-2xl font-bold mb-6 text-left">All Outlets</h1>
+
+                    </div>
+                    <input
+                        //   onChange={(e) => handleSearch(e.target.value)}
+                        type="text"
+                        placeholder="Search"
+                        className="border border-gray-300  w-[469px]
+                        px-[32px] py-4 rounded-[40px] 
+                        focus:outline-none mt-5
+                        md:mt-0  
+                        h-[54px]::placeholder text-[16px] text-black"
+                    />                </div>
+
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {myRestaurantList.length > 0 ? (
                     <>
