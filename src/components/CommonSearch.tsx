@@ -60,9 +60,10 @@ const CommonSearch = () => {
                                     setIsOpen(!isOpen);
                                 }}
                             >
-                                <img src="/images/loclogo.png" alt="Location" />
-                                {addressPart}
-                                <img src="/images/dropdown.png" alt="Dropdown" />
+                                <img className='h-6 w-6' src="/images/loclogo.png" alt="Location" />
+                                <p className='text-sm text-[#888888]'>
+                                    {addressPart ? addressPart : "Mumbai"}
+                                </p>                                <img src="/images/dropdown.png" alt="Dropdown" />
                             </button>
                             {isOpen && (
                                 <div className="absolute top-full mt-2 right-0 bg-white shadow-lg border rounded-[32px] z-10">
@@ -73,8 +74,8 @@ const CommonSearch = () => {
                     )}
                 </div>
 
-               
-                
+
+
             </div>
 
             <div className='md:pl-20 md:pr-[200px] z-50 relative '>

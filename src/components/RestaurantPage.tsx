@@ -149,13 +149,13 @@ const RestaurantPage = () => {
                             <div className='flex '>
                                 <div>
                                     <p className='font-bold text-base'> Address</p>
-                                    <img src='/images/loclogo.png' />
+                                    <img className='w-6' src='/images/loclogo.png' />
                                 </div>
                                 <div className='mx-2'>
                                     <div className=''>
                                         {
                                             checkoutAddress ? (
-                                                <p>
+                                                <p className='text-left'>
                                                     {checkoutAddress.houseName + ", "}
                                                     {checkoutAddress.area}
                                                     {/* {checkoutAddress.landmark + checkoutAddress.landmark ? ", " : ""} */}

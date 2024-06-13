@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { myRestaurants } from '../services/restaurentService';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { capitalizeEachWord } from './commonFunction';
 
 const MyExistingRestaurant = () => {
     const naviugate = useNavigate();
@@ -24,6 +25,9 @@ const MyExistingRestaurant = () => {
         }
     }
 
+    console.log({ myRestaurantList });
+
+
     const goToUpdateRestaurant = (resId: number) => {
         naviugate("/partner-with-us", {
             state: { resId }
@@ -31,16 +35,18 @@ const MyExistingRestaurant = () => {
     }
 
     return (
-        <div className="container mx-auto flex  flex-col px-40"> {/* Added flex-col class */}
+        <div className="container  flex  flex-col xl:px-16 px-6"> {/* Added flex-col class */}
             <ToastContainer />
-            <div className='mt-4'>
-                <div className='flex justify-between border-b-2 mb-4'>
-                    <h1 className="text-2xl font-bold mb-6 text-left flex-grow">Manage Outlets</h1>
+            <div className='mt-16'>
 
+                <h1 className="text-2xl font-bold  text-left flex-grow">Manage Outlets</h1>
+
+                <div className='flex justify-between border-b-2 my-7'>
                 </div>
-                <div className='flex justify-between'>
+
+                <div className='flex justify-between mb-7'>
                     <div className='w-[1184px]'>
-                    <h1 className="text-2xl font-bold mb-6 text-left">All Outlets</h1>
+                        <h1 className="text-2xl font-bold mb-6 text-left">All Outlets</h1>
 
                     </div>
                     <input
@@ -52,9 +58,11 @@ const MyExistingRestaurant = () => {
                         focus:outline-none mt-5
                         md:mt-0  
                         h-[54px]::placeholder text-[16px] text-black"
-                    />                </div>
+                    />
+                </div>
 
             </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {myRestaurantList.length > 0 ? (
                     <>
@@ -62,37 +70,61 @@ const MyExistingRestaurant = () => {
                             <div
 
                                 key={restaurant.id}
-                                className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition duration-300"
+                                className="bg-white shadow-md rounded-[32px] hover:shadow-lg transition duration-300"
                             >
-                                <div className='flex flex-justify-content'>
-                                    <p className="text-gray-600 mr-2">ID: {restaurant.id} | </p>
-                                    <h2 className="text-xl font-semibold mb-2">
-                                        {restaurant.name}</h2>
+                                {
+                                    restaurant?.restaurantImages && restaurant?.restaurantImages?.length > 0 ? (
+                                        <img className='h-[333px] w-full rounded-t-[32px]' src={restaurant?.restaurantImages[0]} />
+                                    ) : (
+                                        <img className='h-[333px] w-full' src={"/images/noimage.jpg"} />
+                                    )
+                                }
+                                <div className=' p-6'>
+                                    <h2 className="text-2xl font-bold mb-3 text-left">
+                                        {capitalizeEachWord(restaurant.name)}</h2>
+                                    <div className='flex mb-3 '>
+                                        <img src='/images/phone.png' className='h-4 w-4 mr-2 mt-1' />
+                                        <p className='text-base'>{restaurant?.contactNumber}</p>
+                                    </div>
+
+                                    <div className='flex mb-6'>
+                                        <img src='/images/loclogo.png' className='h-4 w-4 mr-2 mt-1' />
+                                        <p className='text-base'>{capitalizeEachWord(restaurant?.completeAddress)}</p>
+                                    </div>
+
+                                    <div className="flex w-full space-x-2 ">
+                                        <button
+                                            onClick={() => {
+                                                goToUpdateRestaurant(restaurant.id);
+                                            }}
+                                            className="flex-1 text-orange-500 border border-orange-500 px-4 py-3 rounded-full focus:outline-none"
+                                        >
+                                            <p className="text-base"> Edit Info</p>
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                naviugate("/set-menu", {
+                                                    state: { resId: restaurant.id, restaurantImages: restaurant?.restaurantImages }
+                                                });
+                                            }}
+                                            className="flex-1 text-orange-500 border border-orange-500 px-4 py-3 rounded-full focus:outline-none"
+                                        >
+                                            <p className="">Menu</p>
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                naviugate("/manage-orders", {
+                                                    state: { resId: restaurant.id }
+                                                });
+                                            }}
+                                            className="flex-1 text-white px-4 py-3 rounded-full bg-orange-500 focus:outline-none"
+                                        >
+                                            <p className="">Orders</p>
+                                        </button>
+                                    </div>
+
                                 </div>
-                                <div className='flex flex justify-content'>
-                                    <button
-                                        onClick={() => {
-                                            goToUpdateRestaurant(restaurant.id)
-                                        }}
-                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                    >Restaurant</button>
-                                    <button
-                                        onClick={() => {
-                                            naviugate("/set-menu", {
-                                                state: { resId: restaurant.id }
-                                            })
-                                        }}
-                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                    >Menu </button>
-                                    <button
-                                        onClick={() => {
-                                            naviugate("/manage-orders", {
-                                                state: { resId: restaurant.id }
-                                            })
-                                        }}
-                                        className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                                    >Orders </button>
-                                </div>
+
                             </div>
                         ))}
                     </>

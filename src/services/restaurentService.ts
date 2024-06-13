@@ -109,6 +109,25 @@ export const imageOrDocumentUploadRestaurant = async (token: string, formData: a
     }
 }
 
+
+export const uploadRestaurantImages = async (token: string, formData: any) => {
+
+    console.log({ formData });
+
+    try {
+        const response = await axiosInstance.post(`/restaurant/images`, formData, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        return { data: response.data, status: response.status }
+
+    } catch (error) {
+        console.error('Error during :', error);
+        return { error }
+    }
+}
+
 export const verificationDetailsAddOrUpdate = async (token: string, formData: any, restaurentId: number) => {
     try {
         const response = await axiosInstance.post(`/restaurant/verification-details/${restaurentId}`, formData, {

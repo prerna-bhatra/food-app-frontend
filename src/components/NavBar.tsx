@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
 
 
   return (
-    <nav className={` md:pr-40 pr-2 md:pl-40 border border-gray-300 mb-100 md:mt-0 pb-4 ${pathsThatInludesOnlyProfile.includes(location.pathname) ? 'main-nav-bar shadow' : 'nav-bar  pb-[8rem]'}`}>
+    <nav className={` md:px-16 border border-gray-300 mb-100 md:mt-0 pb-4 ${pathsThatInludesOnlyProfile.includes(location.pathname) ? 'main-nav-bar shadow' : 'nav-bar  pb-[8rem]'}`}>
       <div className="container mx-auto flex justify-between items-center mt-6">
         <div className="flex items-center space-x-4">
 
@@ -157,7 +157,7 @@ const Navbar: React.FC = () => {
                   px-[32px] py-4 rounded-[40px] 
                   focus:outline-none mt-5
                    md:mt-0 w-full md:w-auto md:flex-grow 
-                   h-[54px]::placeholder text-gray-400 text-[16px] text-[#1F1F1F]"
+                   h-[54px]::placeholder  text-[16px] text-[#1F1F1F]"
                 />
 
                 {token && (
@@ -172,7 +172,7 @@ const Navbar: React.FC = () => {
                     >
 
                       <div className="flex items-center space-x-4 ">
-                        <img src="/images/loclogo.png" alt="Location" />
+                        <img src="/images/loclogo.png" alt="Location"  className='h-6 2-6'/>
                         <p className='text-sm text-[#888888]'>
                           {addressPart ? addressPart : "Mumbai"}
                         </p>

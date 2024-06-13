@@ -384,7 +384,7 @@ const RegisterRestaurantForm = () => {
                     </div>
                     <div className="">
                         <label className="block text-sm font-medium text-gray-700 text-left"> Description</label>
-                        <textarea rows={4} {...register('outletDescription', { required: true })} className="border rounded px-4 py-2 w-full"
+                        <textarea rows={4} placeholder='mentuon your famous dish in this field' {...register('outletDescription', { required: true })} className="border rounded px-4 py-2 w-full"
                         ></textarea>
                         {errors.outletDescription && <span className="text-red-500">Outlet Description is required</span>}
                     </div>

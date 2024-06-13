@@ -5,6 +5,7 @@ import { addMenuItem, dishesByRestaurant } from '../services/menuService';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { uploadRestaurantImages } from '../services/restaurentService';
 
 interface DishFormData {
     dishes: {
@@ -17,6 +18,7 @@ interface DishFormData {
 const AddMenu: React.FC = () => {
     const { token } = useSelector((state: any) => state.auth);
     const location = useLocation();
+    const [imageUploadLoading, setImageUploadLoading] = useState(false)
 
     const [addLoading, setAddLoading] = useState(false)
 
@@ -30,22 +32,25 @@ const AddMenu: React.FC = () => {
         name: 'dishes',
     });
 
-    console.log({ fields });
-
     useEffect(() => {
+        if (location?.state?.restaurantImages && location?.state?.restaurantImages?.length > 0) {
+            console.log(location?.state?.restaurantImages
+            );
+            setImages(location?.state?.restaurantImages);
+
+        }
         existingMenu()
-    }, []);
+    }, [location]);
+
 
     const existingMenu = async () => {
         const response: any = await dishesByRestaurant(location.state.resId, token);
-        console.log({ response });
 
         if (response.error) {
             toast.error(response.error.message)
         }
 
         if (response.status === 200) {
-            console.log({ dis: response?.data?.dishes });
 
             setValue('dishes', response?.data?.dishes.map((dish: any) => ({
                 name: dish.dishname,
@@ -93,50 +98,122 @@ const AddMenu: React.FC = () => {
 
     const isEdit = true; // Assuming this is your edit mode flag
 
+    const [images, setImages] = useState<any>([]);
+
+
+    const handleImageUpload = async (event: { target: { files: any[]; }; }) => {
+        setImageUploadLoading(true)
+        const file = event.target.files[0];
+        if (file && images.length < 4) {
+            const newImage = URL.createObjectURL(file);
+
+            const formData = new FormData();
+            formData.append("document", file)
+            formData.append("restaurantId", location.state.resId)
+
+            const response = await uploadRestaurantImages(token, formData);
+            console.log({ response });
+
+            setImages([...images, newImage]);
+        }
+
+        setImageUploadLoading(false)
+
+    };
+
+    // const handleImageDelete = (index: any) => {
+    //     const newImages = images.filter((_: any, i: any) => i !== index);
+    //     setImages(newImages);
+    // };
+
+
     return (
-        <div className=" mt-4 border p-4 rounded">
+        <div className="   p-4 rounded px-16">
             <ToastContainer />
+            <h1 className='text-[#FF6D03] text-[32px] text-left mb-6 mt-16 font-extrabold	'>Restaurant Images</h1>
+            <div className='flex flex-wrap mb-8'>
+                {images?.map((image: string | undefined, index: React.Key | null | undefined) => (
+                    <div key={index} className='relative m-2 rounded-[8px]'>
+                        <img src={image} alt={`Uploaded ${index}`} className='border h-32 rounded-[8px] w-32' />
+                        <button
+                            // onClick={() => handleImageDelete(index)}
+                            className='absolute top-1 right-1 bg-[#FF6D03] text-white rounded-full h-6 w-6 flex items-center justify-center'
+                        >
+                            ×
+                        </button>
+                    </div>
+                ))}
+
+                {images.length < 4 && (
+                    <div className='relative m-2 border border-[#FF6D03] rounded-[8px] h-32 w-32 flex items-center justify-center'>
+                        {
+                            imageUploadLoading ? (
+                                <FaSpinner />
+                            ) : (
+                                <img src="/images/upload_icon.png" className='h-6 w-6' />
+
+                            )
+                        }
+                        <input
+                            type='file'
+                            className='absolute inset-0 opacity-0 cursor-pointer'
+                            accept='image/*'
+                            onChange={(e: any) => {
+                                handleImageUpload(e)
+                            }}
+                        />
+                    </div>
+                )}
+            </div>
+
+            <h1 className='text-[#FF6D03] text-left mb-4 font-extrabold text-[32px] mb-6 '>Restaurant Menu</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
                     {fields.map((item, index) => (
-                        <div key={item.id} className="mb-4 border p-4 rounded">
-                            <div className='flex justify-between items-center'>
-                                <h5 className='font-bold'>Dish {index + 1}</h5>
-                                <button 
-                                type="button"
-                                onClick={() => remove(index)}
-                                className=" bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white">
+                        <div key={item.id} className="mb-4 border p-6 rounded-3xl">
+                            <div className='flex justify-between items-center mb-6'>
+                                <h5 className='font-bold text-2xl'>Dish {index + 1}</h5>
+                                <button
+                                    type="button"
+                                    onClick={() => remove(index)}
+                                    className=" bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white">
                                     {/* <FaTrash /> */}
                                     Delete
                                 </button>
                             </div>
-                            <div className="flex items-start mt-2">
+                            
+                            <div className="flex items-start mt-2 gap-4">
                                 <div className="w-full">
                                     <input
                                         disabled={!isEdit}
                                         {...register(`dishes.${index}.name`, { required: true })}
                                         type="text"
-                                        className="border border-gray-400 rounded px-4 py-2 w-full mb-2 focus:border-[#ff6d03] focus:outline-none"
+                                        className="border border-[#888888] rounded-lg px-4 py-2 w-full mb-2 focus:border-[#ff6d03] focus:outline-none flex-1"
                                         placeholder="Dish Name"
                                     />
                                     <input
                                         disabled={!isEdit}
                                         {...register(`dishes.${index}.price`, { required: true, pattern: /^[0-9]*$/ })}
                                         type="text"
-                                        className="border border-gray-400 rounded px-4 py-2 w-full focus:outline-none focus:border-[#ff6d03]"
+                                        className="border border-[#888888] rounded-lg px-4 py-2 w-full focus:outline-none focus:border-[#ff6d03] flex-1"
                                         placeholder="Dish Price"
                                     />
                                     {errors.dishes && (errors.dishes[index]?.name || errors.dishes[index]?.price) && (
                                         <span className="text-red-500">Dish name and price are required</span>
                                     )}
                                 </div>
-                                <div className="ml-4 w-1/4 flex flex-col items-center">
+
+                                <div className="flex flex-col items-center">
                                     {typeof (item.image) === "string" && item.image.length > 0 ? (
-                                        <div>
-                                            <img src={item.image} alt="Dish" className="h-24 w-24 object-cover rounded" />
+                                        <div className=''>
+                                            <img 
+                                            src={item.image} 
+                                            alt="Dish"
+                                             style={{"width":"130px",  "height":"96px"}} 
+                                             className='rounded-lg' />
                                         </div>
                                     ) : (
-                                        <div className=" w-full" style={{
+                                        <div className="w-full" style={{
                                             position: 'relative',
                                             display: 'inline-block',
                                             width: '100px',
@@ -175,11 +252,11 @@ const AddMenu: React.FC = () => {
                             </div>
                         </div>
                     ))}
-                    <div className="mt-4 w-full" style={{
+                    <div className="mt-4 w-full rounded-3xl" style={{
                         position: 'relative',
                         display: 'inline-block',
                         width: '500px',
-                        height: '160px',
+                        height: '170px',
                         color: '#ff6d03',
                         border: '1px solid #ff6d03',
                         borderRadius: '5px',

@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { orderStatusUpdate, ordersByRestaurantId } from '../services/orderService';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import { capitalizeEachWord } from './commonFunction';
 
 const ManageOrders = () => {
     const { token } = useSelector((state: any) => state.auth);
@@ -38,18 +39,18 @@ const ManageOrders = () => {
     const filteredOrders = orders.filter((order: any) => order.orderStatus === selectedStatus);
 
     return (
-        <div className="container mx-auto px-40 mt-4">
+        <div className="container mx-auto px-16 mt-[56px] ">
             <ToastContainer />
 
-            <div className='flex justify-between mb-4' style={{ borderBottom: "1px solid #ccc" }}>
-                <div>
-                    <h1 className='font-bold'>
-                        Manage Orders
-                    </h1>
+            <div className='flex justify-between mb-10' style={{ borderBottom: "1px solid #ccc" }}>
+                <h1 className='font-bold text-[32px] '>
+                    Manage Orders
+                </h1>
+                <div className='my-10'>
+
                 </div>
-                {/* <div>
-                    <input className='border ' placeholder='Search'/>
-                </div> */}
+
+
                 <div className="mb-4">
                     <label htmlFor="orderStatus" className="mr-2">Filter by Status:</label>
                     <select
@@ -60,63 +61,90 @@ const ManageOrders = () => {
                     >
                         <option value="pending">Pending</option>
                         <option value="confirmed">Accepted</option>
-                        <option value="delivered">Delivered</option>
+                        <option value="delivered">Dispatch</option>
+                        <option value="dispatch">Dispatch</option>
                         <option value="rejected">Declined</option>
                     </select>
                 </div>
 
             </div>
 
+            <h1 className='font-bold text-lg text-left mb-4'>
+                {capitalizeEachWord(selectedStatus)} Orders
+            </h1>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
-                {filteredOrders.map((order: any) => (
-                    <div key={order.id} className="border border-gray-300 p-4 rounded-md text-left">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  ">
+                {filteredOrders.map((order: any, index: number) => (
+                    <div key={order.id} className="border border-gray-300 p-6  text-left rounded-[24px]  " style={{ "height": "max-content" }}>
 
                         <div className='flex justify-between mb-2'>
-                            <h2 className="text-lg font-semibold text-[#ff6d03]">Order # {order.id}</h2>
+                            <h2 className="text-base font-bold text-[#ff6d03]">Order # {index + 1}</h2>
                             <p className='text-[#D0AF00]'>{order.orderStatus}</p>
                         </div>
 
-                        <div className='flex mb-2'>
+                        <div className='flex mb-2 my-4'>
+                            <p className='text-lg font-bold'>{capitalizeEachWord(order?.User?.username)}</p>
+                        </div>
+
+                        <div className='flex mb-2 my-4'>
                             <div className='mr-2'>
-                                <img src="/images/loclogo.png" alt="Location" />
+                                <img className='w-4' src="/images/phone.png" alt="Location" />
                             </div>
-                            <p>{order.checkoutAddress.googleAddress}</p>
+                            <p className='text-base'>{order?.User?.phone}</p>
 
                         </div>
 
-                        <ul className='border p-4 mb-4'>
-                            {order.foodItems.map((item: any) => (
-                                <li key={item.id} className='flex justify-between'>
+                        <div className='flex mb-2 my-4'>
+                            <div className='mr-2'>
+                                <img className='w-6' src="/images/loclogo.png" alt="Location" />
+                            </div>
+                            <p className='text-base'>{order?.checkoutAddress?.googleAddress.slice(0, 25)}...</p>
 
-                                    <p>
-                                        {item.dishname}
-                                    </p>
-                                    <p>
+                        </div>
+
+                        <hr className='my-4' />
+
+                        <ul className=''>
+                            {order.foodItems.map((item: any) => (
+                                <li key={item.id} className='flex justify-between my-4'>
+                                    <div className='flex space-x-4'>
+                                        <img src={item?.dishImage} className='w-[48px] h-10 rounded-lg' />
+                                        <p className='my-2 text-base'>
+                                            {capitalizeEachWord(item.dishname || '')}
+                                        </p>
+                                    </div>
+
+                                    <p className='my-2 text-base'>
                                         ₹{item.price}  × {item.quantity}
                                     </p>
                                 </li>
                             ))}
                         </ul>
 
-                        <div className='flex justify-between'>
-                            <p>Total Amount</p>
-                            <p>₹{order.totalPrice}</p>
+                        <hr className='my-4' />
+
+
+                        <div className='flex justify-between mb-6'>
+                            <p className='font-bold text-lg'>Total Amount</p>
+                            <p className='font-bold text-lg'>₹{order.totalPrice}</p>
 
                         </div>
 
+
+
                         {
                             order?.orderStatus === "pending" ? (
-                                <div className='flex justify-end'>
+                                <div className='flex justify-end gap-2'>
                                     <button
-                                        className="mr-4 bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white"
+                                        className="flex-1 bg-white text-orange-500 border border-orange-500 px-6 py-2 rounded-full hover:bg-orange-500 hover:text-white focus:outline-none focus:bg-orange-500 focus:text-white"
                                         onClick={() => {
                                             handleChangeStatus(order.id, 'rejected')
                                         }}
                                     >Decline</button>
                                     <button onClick={() => {
                                         handleChangeStatus(order.id, 'confirmed')
-                                    }} className="mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 ">Accept</button>
+                                    }} className="flex-1 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 ">Accept</button>
                                 </div>
                             ) : null
                         }
@@ -127,7 +155,7 @@ const ManageOrders = () => {
                             order?.orderStatus === "confirmed" ? (
                                 <button onClick={() => {
                                     handleChangeStatus(order.id, 'delivered')
-                                }} className=" mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 ">Delivered</button>
+                                }} className=" mr-4 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 focus:outline-none focus:bg-orange-600 ">Dispatch</button>
                             ) : null}
 
                         {/* <select

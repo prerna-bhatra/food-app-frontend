@@ -34,58 +34,58 @@ const Profile = () => {
     };
 
     return (
-        <div className="flex justify-center mt-10 mb-10 ml-[200px] mr-[300px]">
+        <div className="flex justify-center mt-10 mb-10 px-40 ">
             <ToastContainer />
-            <div className="w-full min-w-lg">
+            <div className="w-full min-w-lg ">
                 {/* Centered content with max width */}
-                <div className="flex justify-between">
+                <div className="flex justify-between gap-6">
                     <div className="w-1/2">
-                        <div className="flex flex-col space-y-4 border border-gray-200">
-                            <button className="w-full px-4 py-2 rounded text-left" style={{ backgroundColor: 'rgba(255, 215, 0, 0.5)' }}>Profile</button>
-                            <button className="w-full px-4 py-2 rounded text-left">Reviews</button>
-                            <button className="w-full px-4 py-2 rounded text-left">Photos</button>
-                            <button className="w-full px-4 py-2 rounded text-left">Favourite</button>
-                            <button className="w-full px-4 py-2 rounded text-left">Recently Viewed</button>
-                            <button className="w-full px-4 py-2 rounded text-left">BookMarks</button>
-                            <button className="w-full px-4 py-2 rounded text-left">Blog Posts</button>
+                        <div className="flex flex-col space-y-4 border border-gray-200 rounded-[24px] p-4">
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]" style={{ backgroundColor: 'rgba(255, 215, 0, 0.5)' }}>Profile</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Reviews</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Photos</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Favourite</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Recently Viewed</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">BookMarks</button>
+                            <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Blog Posts</button>
                         </div>
                     </div>
-                    <div className="w-1/2 px-4">
+                    <div className="w-1/2  border border-gray-200 rounded-[24px] p-4">
                         <div>
-                            <h2 className="text-xl font-bold mb-4">User Profile</h2>
+                            <h2 className="text-xl font-bold mb-4 text-left">User Profile</h2>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="mb-4">
-                                    <label htmlFor="name" className="block">Name:</label>
+                                    <label htmlFor="name" className="block text-base text-left mb-2">Name:</label>
                                     <input
                                         type="text"
                                         id="name"
                                         {...register('name', { required: true })}
                                         disabled={!user}
-                                        className="border rounded px-4 py-2 w-full"
+                                        className="border rounded-full px-4 py-2 w-full mb-2"
                                     />
                                     {errors.name && <span className="text-red-500">Name is required</span>}
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="email" className="block">Email:</label>
+                                    <label htmlFor="email" className="block text-left mb-2">Email:</label>
                                     <input
                                         type="email"
                                         id="email"
                                         value={user ? user.email : ''}
                                         disabled
-                                        className="border rounded px-4 py-2 w-full"
+                                        className="border rounded-full px-4 py-2 w-full mb-2"
                                     />
                                 </div>
                                 <div className="mb-4">
-                                    <label htmlFor="phone" className="block">Phone:</label>
+                                    <label htmlFor="phone" className="block text-left mb-2">Phone:</label>
                                     <input
                                         type="text"
                                         id="phone"
                                         value={user ? user.phone : ''}
                                         disabled
-                                        className="border rounded px-4 py-2 w-full"
+                                        className="border rounded-full px-4 py-2 w-full mb-2"
                                     />
                                 </div>
-                                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-full" >
+                                <button type="submit" className="bg-orange-500 text-white px-4 py-2 rounded-full w-full" >
                                     {loading && (
                                         <FaSpinner className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-spin" />
                                     )}

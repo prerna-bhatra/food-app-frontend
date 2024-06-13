@@ -25,7 +25,7 @@ const RestaurantList = () => {
     };
 
     return (
-        <div className="container  mt-10 px-40">
+        <div className="container  mt-10 px-16">
 
             <div>
                 <CommonSearch />
@@ -74,7 +74,7 @@ const RestaurantList = () => {
                                 className="w-full h-[333px] object-cover"
                             />
                         )}
-                        <div className="p-4">
+                        <div className="p-6">
                             <h3 className="text-2xl font-semibold text-left">{capitalizeEachWord(restaurant.name)}</h3>
                             {restaurant.Menus.length > 0 && (
                                 <div className="mt-2 flex justify-between items-center ">
