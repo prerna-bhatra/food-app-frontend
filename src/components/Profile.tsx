@@ -34,12 +34,12 @@ const Profile = () => {
     };
 
     return (
-        <div className="flex justify-center mt-10 mb-10 px-40 ">
+        <div className="md:flex md:justify-center mt-10 mb-10 md:px-40 ">
             <ToastContainer />
             <div className="w-full min-w-lg ">
                 {/* Centered content with max width */}
-                <div className="flex justify-between gap-6">
-                    <div className="w-1/2">
+                <div className="md:flex md:justify-between gap-6">
+                    <div className="md:w-1/2">
                         <div className="flex flex-col space-y-4 border border-gray-200 rounded-[24px] p-4">
                             <button className="w-full px-4 py-2 rounded text-left rounded-[8px]" style={{ backgroundColor: 'rgba(255, 215, 0, 0.5)' }}>Profile</button>
                             <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Reviews</button>
@@ -50,7 +50,7 @@ const Profile = () => {
                             <button className="w-full px-4 py-2 rounded text-left rounded-[8px]">Blog Posts</button>
                         </div>
                     </div>
-                    <div className="w-1/2  border border-gray-200 rounded-[24px] p-4">
+                    <div className="md:w-1/2  border border-gray-200 rounded-[24px] p-4">
                         <div>
                             <h2 className="text-xl font-bold mb-4 text-left">User Profile</h2>
                             <form onSubmit={handleSubmit(onSubmit)}>

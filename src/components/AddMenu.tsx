@@ -128,7 +128,7 @@ const AddMenu: React.FC = () => {
 
 
     return (
-        <div className="   p-4 rounded px-16">
+        <div className="md:p-4 rounded md:px-16">
             <ToastContainer />
             <h1 className='text-[#FF6D03] text-[32px] text-left mb-6 mt-16 font-extrabold	'>Restaurant Images</h1>
             <div className='flex flex-wrap mb-8'>
@@ -255,7 +255,8 @@ const AddMenu: React.FC = () => {
                     <div className="mt-4 w-full rounded-3xl" style={{
                         position: 'relative',
                         display: 'inline-block',
-                        width: '500px',
+                        maxWidth: '500px', // Set maximum width if needed
+                        width: '100%',
                         height: '170px',
                         color: '#ff6d03',
                         border: '1px solid #ff6d03',

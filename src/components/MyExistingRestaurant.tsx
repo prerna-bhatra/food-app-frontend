@@ -44,16 +44,15 @@ const MyExistingRestaurant = () => {
                 <div className='flex justify-between border-b-2 my-7'>
                 </div>
 
-                <div className='flex justify-between mb-7'>
+                <div className='md:flex md:justify-between mb-7'>
                     <div className='w-[1184px]'>
                         <h1 className="text-2xl font-bold mb-6 text-left">All Outlets</h1>
 
                     </div>
                     <input
-                        //   onChange={(e) => handleSearch(e.target.value)}
                         type="text"
                         placeholder="Search"
-                        className="border border-gray-300  w-[469px]
+                        className="border border-gray-300  md:w-[469px] xs:w-full
                         px-[32px] py-4 rounded-[40px] 
                         focus:outline-none mt-5
                         md:mt-0  

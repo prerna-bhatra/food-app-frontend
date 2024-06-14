@@ -153,34 +153,36 @@ const RegisterRestaurantForm = () => {
 
 
     return (
-        <div className="p-4">
+        <div className="p-4 md:px-16">
             <ToastContainer />
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 flex flex-col px-40 w-full">
-                <div className='gap-4 grid grid-cols-1 md:grid-cols-2'>
 
-                    <div className="col-span-2">
-                        <p className='text-[32px] font-bold text-[#ff6d03] text-left'>Register Your Restaurant</p>
-                    </div>
-                    <div className={restaurantId?"":"col-span-2"}>
-                        <p className='text-[24px] font-bold text-left'>Restaurant Details</p>
-                    </div>
+            <div className="col-span-2">
+                <p className='text-[32px] font-bold text-[#ff6d03] text-left'>Register Your Restaurant</p>
+            </div>
+            <div className='flex justify-between'>
+                <div className={restaurantId ? "" : "col-span-2"}>
+                    <p className='text-[24px] font-bold text-left'>Restaurant Details</p>
+                </div>
 
-                    {restaurantId ? (
-                        <>
-                            {/* <div></div> */}
-                            <div className='flex justify-end'>
-                                <button onClick={() => {
-                                    setIsEdit(!isEdit)
-                                }} type="button" className="inline-flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-900">
-                                    {isEdit ? <>Cancel</> : <>
-                                        <FaPen className='mr-2' />
-                                        Edit
-                                    </>}
-                                </button>
-                            </div>
-                        </>
-                    ) : null}
+                {restaurantId ? (
+                    <>
+                        {/* <div></div> */}
+                        <div className='flex justify-end'>
+                            <button onClick={() => {
+                                setIsEdit(!isEdit)
+                            }} type="button" className="inline-flex py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-900">
+                                {isEdit ? <>Cancel</> : <>
+                                    <FaPen className='mr-2' />
+                                    Edit
+                                </>}
+                            </button>
+                        </div>
+                    </>
+                ) : null}
+            </div>
 
+            <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-4">
+                <div className='gap-4 md:grid'>
                     <div>
                         <label className="block text-sm font-medium text-gray-700 text-left">Restaurant Name</label>
                         <input
@@ -199,12 +201,12 @@ const RegisterRestaurantForm = () => {
                         {errors.completeAddress && <span className="text-red-500">Complete Address is required</span>}
                     </div>
 
-                    <div className="flex space-x-4 col-span-2">
+                    <div className="flex space-x-4 md:col-span-2">
                         <input disabled {...register('googleAddress')} type="text" readOnly={true} className="border rounded px-4 py-2 w-3/4" />
-                        <button 
-                        type="button"
-                         onClick={detectCurrentLocation} 
-                        className="w-80 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <button
+                            type="button"
+                            onClick={detectCurrentLocation}
+                            className="w-80 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             Detect Location
                         </button>
                     </div>
