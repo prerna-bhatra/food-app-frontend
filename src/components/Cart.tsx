@@ -8,7 +8,10 @@ import { useSelector } from 'react-redux';
 const Cart = (props: any) => {
     const { token } = useSelector((state: any) => state.auth);
     const navigate = useNavigate()
+    
     const { items } = props;
+    console.log({items});
+
     const handleIncrement = (index: number) => {
         const updatedItems = [...items];
         updatedItems[index].quantity++;
@@ -41,7 +44,6 @@ const Cart = (props: any) => {
             toast.error("please select an address to checkout");
             return
         }
-        console.log({ checkoutAddress: props.checkoutAddress });
         const response: any = await createOrder({
             totalPrice,
             checkoutAddress: props.checkoutAddress,
@@ -49,7 +51,6 @@ const Cart = (props: any) => {
             restaurantId: props.restaurantId,
             paymentMethod: 'COD'
         }, token)
-        console.log({ response });
         if (response.status === 200) {
             toast.success("order created succefully");
             navigate("/my-orders")

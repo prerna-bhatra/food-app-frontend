@@ -10,6 +10,7 @@ const ManageOrders = () => {
     const location = useLocation();
     const [orders, setOrders] = useState([]);
     const [selectedStatus, setSelectedStatus] = useState('pending');
+    
 
     useEffect(() => {
         fetchOrders();
@@ -70,13 +71,13 @@ const ManageOrders = () => {
             </div>
 
             <h1 className='font-bold text-lg text-left mb-4'>
-                {capitalizeEachWord(selectedStatus)} Orders
+                {capitalizeEachWord(selectedStatus || '')} Orders
             </h1>
 
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  ">
                 {filteredOrders.map((order: any, index: number) => (
-                    <div key={order.id} className="border border-gray-300 p-6  text-left rounded-[24px]  " style={{ "height": "max-content" }}>
+                    <div key={order._id} className="border border-gray-300 p-6  text-left rounded-[24px]  " style={{ "height": "max-content" }}>
 
                         <div className='flex justify-between mb-2'>
                             <h2 className="text-base font-bold text-[#ff6d03]">Order # {index + 1}</h2>
@@ -84,14 +85,14 @@ const ManageOrders = () => {
                         </div>
 
                         <div className='flex mb-2 my-4'>
-                            <p className='text-lg font-bold'>{capitalizeEachWord(order?.User?.username)}</p>
+                            <p className='text-lg font-bold'>{capitalizeEachWord(order?.userId?.username || '')}</p>
                         </div>
 
                         <div className='flex mb-2 my-4'>
                             <div className='mr-2'>
                                 <img className='w-4' src="/images/phone.png" alt="Location" />
                             </div>
-                            <p className='text-base'>{order?.User?.phone}</p>
+                            <p className='text-base'>{order?.userId?.phone}</p>
 
                         </div>
 
@@ -107,7 +108,7 @@ const ManageOrders = () => {
 
                         <ul className=''>
                             {order.foodItems.map((item: any) => (
-                                <li key={item.id} className='flex justify-between my-4'>
+                                <li key={item._id} className='flex justify-between my-4'>
                                     <div className='flex space-x-4'>
                                         <img src={item?.dishImage} className='w-[48px] h-10 rounded-lg' />
                                         <p className='my-2 text-base'>

@@ -65,10 +65,10 @@ const MyExistingRestaurant = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {myRestaurantList.length > 0 ? (
                     <>
-                        {myRestaurantList.map((restaurant) => (
+                        {myRestaurantList.map((restaurant , index) => (
                             <div
 
-                                key={restaurant.id}
+                                key={index}
                                 className="bg-white shadow-md rounded-[32px] hover:shadow-lg transition duration-300"
                             >
                                 {
@@ -94,7 +94,7 @@ const MyExistingRestaurant = () => {
                                     <div className="flex w-full space-x-2 ">
                                         <button
                                             onClick={() => {
-                                                goToUpdateRestaurant(restaurant.id);
+                                                goToUpdateRestaurant(restaurant._id);
                                             }}
                                             className="flex-1 text-orange-500 border border-orange-500 px-4 py-3 rounded-full focus:outline-none"
                                         >
@@ -103,7 +103,7 @@ const MyExistingRestaurant = () => {
                                         <button
                                             onClick={() => {
                                                 naviugate("/set-menu", {
-                                                    state: { resId: restaurant.id, restaurantImages: restaurant?.restaurantImages }
+                                                    state: { resId: restaurant._id, restaurantImages: restaurant?.restaurantImages }
                                                 });
                                             }}
                                             className="flex-1 text-orange-500 border border-orange-500 px-4 py-3 rounded-full focus:outline-none"
@@ -113,7 +113,7 @@ const MyExistingRestaurant = () => {
                                         <button
                                             onClick={() => {
                                                 naviugate("/manage-orders", {
-                                                    state: { resId: restaurant.id }
+                                                    state: { resId: restaurant._id }
                                                 });
                                             }}
                                             className="flex-1 text-white px-4 py-3 rounded-full bg-orange-500 focus:outline-none"

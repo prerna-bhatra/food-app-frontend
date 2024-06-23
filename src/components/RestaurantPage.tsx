@@ -10,11 +10,16 @@ const RestaurantPage = () => {
     const location = useLocation();
     const { token } = useSelector((state: any) => state.auth);
     const [restaurant, setRestaurant] = useState<any>(null);
+    const [menus, setMenus] = useState<any>(null);
+
     const [selectedItems, setSelectedItems] = useState<any[]>([]);
 
     const [isLocationOpen, setLocationOpen] = useState(false);
     const [isCartOpen, setCartOpen] = useState(false);
     const [isPaymentOpen, setPaymentOpen] = useState(false);
+
+
+
 
     const toggleLocation = () => {
         setLocationOpen(!isLocationOpen);
@@ -35,9 +40,12 @@ const RestaurantPage = () => {
     const fetchRestaurant = async () => {
         const response = await restaurantById(token, location?.state?.resId);
         if (response.status === 200) {
-            setRestaurant(response.data.restaurant);
+            setRestaurant(response?.data?.restaurant);
+            setMenus(response?.data?.menus)
         }
     };
+
+
 
     const addToCart = (menu: any) => {
         const existingItemIndex = selectedItems.findIndex(item => item.id === menu.id);
@@ -71,7 +79,7 @@ const RestaurantPage = () => {
     }
 
     const { name, completeAddress, Menus, city, cuisines = [] } = restaurant;
-    const firstMenuImage = Menus?.length ? Menus[0].dishImage : '';
+    const firstMenuImage = restaurant?.restaurantImages?.length ? restaurant?.restaurantImages[0] : '';
 
     return (
         <div className="container md:mx-auto  md:px-40">
@@ -93,8 +101,8 @@ const RestaurantPage = () => {
                 </div>
                 <div className='flex justify-between'>
                     <div>
-                    <p className="text-gray-700 mb-2 text-left">{capitalizeEachWord(completeAddress)} , {capitalizeEachWord(city)}</p>
-                    <p className='text-gray-700  text-left'>{cuisines?.join(" , ")}</p>
+                        <p className="text-gray-700 mb-2 text-left">{capitalizeEachWord(completeAddress)} , {capitalizeEachWord(city)}</p>
+                        <p className='text-gray-700  text-left'>{cuisines?.join(" , ")}</p>
                     </div>
                     <div className='flex gap-[12px]'>
                         <img className='h-[54px] w-[154x] cursor-pointer' src={"/images/save.png"} />
@@ -109,8 +117,8 @@ const RestaurantPage = () => {
 
             <div className="mt-8 md:flex rounded-lg">
                 <div className=" md:grid md:gap-6 grid-cols-1 w-[680px] ">
-                    {Menus && Menus.length > 0 ? (
-                        Menus.map((menu: any) => (
+                    {menus && menus.length > 0 ? (
+                        menus.map((menu: any) => (
                             <div key={menu.id} className="bg-white relative rounded-[32px] shadow  flex justify-start h-[235px]">
                                 <img
                                     src={menu.dishImage}
@@ -189,7 +197,7 @@ const RestaurantPage = () => {
                 </div>
             </div>
             <div className="mt-8">
-                <h3 className="text-2xl font-semibold mb-4">Reviews</h3>
+                {/* <h3 className="text-2xl font-semibold mb-4">Reviews</h3> */}
                 <p className="text-gray-700"> {/* Add review content here */} </p>
             </div>
         </div>

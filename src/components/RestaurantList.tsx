@@ -10,8 +10,8 @@ const RestaurantList = () => {
     const location = useLocation();
     const { token } = useSelector((state: any) => state.auth);
     const [restaurants, setRestaurants] = useState<any[]>([]);
+    const [menu , setMenu] = useState<any>([])
 
-    console.log({ restaurants });
 
     useEffect(() => {
         restaurantList();
@@ -20,7 +20,8 @@ const RestaurantList = () => {
     const restaurantList = async () => {
         const response: any = await searchByDishName(token, location.state.dishname);
         if (response.status === 200) {
-            setRestaurants(response.data.restaurants);
+            setRestaurants(response?.data?.restaurants);
+            setMenu(response?.data?.menus)
         }
     };
 
@@ -64,25 +65,25 @@ const RestaurantList = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 cursor-pointer ">
                 {restaurants.map((restaurant) => (
                     <div
-                        onClick={() => { navigate("/restaurant", { state: { resId: restaurant.id } }) }}
-                        key={restaurant.id}
+                        onClick={() => { navigate("/restaurant", { state: { resId: restaurant._id } }) }}
+                        key={restaurant._id}
                         className="bg-white shadow-md rounded-[32px] overflow-hidden">
-                        {restaurant.Menus.length > 0 && (
+                        {restaurant?.restaurantImages?.length > 0 && (
                             <img
-                                src={restaurant.Menus[0].dishImage}
-                                alt={restaurant.Menus[0].dishname}
+                                src={restaurant.restaurantImages[0]}
+                                // alt={restaurant.Menus[0].dishname}
                                 className="w-full h-[333px] object-cover"
                             />
                         )}
                         <div className="p-6">
                             <h3 className="text-2xl font-semibold text-left">{capitalizeEachWord(restaurant.name)}</h3>
-                            {restaurant.Menus.length > 0 && (
+                            {menu.length > 0 && (
                                 <div className="mt-2 flex justify-between items-center ">
                                     <span className="text-[#888888] text-base">
-                                        {capitalizeEachWord(restaurant.Menus[0].dishname)}
+                                        {capitalizeEachWord(menu[0].dishname)}
                                     </span>
                                     <span className="text-[#888888] text-base">
-                                        ₹{restaurant.Menus[0].price} for one
+                                        ₹{menu[0].price} for one
                                     </span>
                                 </div>
                             )}
