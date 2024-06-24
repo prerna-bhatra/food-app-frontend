@@ -47,8 +47,8 @@ const RestaurantPage = () => {
 
 
 
-    const addToCart = (menu: any) => {
-        const existingItemIndex = selectedItems.findIndex(item => item.id === menu.id);
+    const addToCart = (menu: any) => {        
+        const existingItemIndex = selectedItems.findIndex(item => item._id === menu._id);
 
         if (existingItemIndex !== -1) {
             const updatedItems = [...selectedItems];
@@ -119,7 +119,7 @@ const RestaurantPage = () => {
                 <div className=" md:grid md:gap-6 grid-cols-1 w-[680px] ">
                     {menus && menus.length > 0 ? (
                         menus.map((menu: any) => (
-                            <div key={menu.id} className="bg-white relative rounded-[32px] shadow  flex justify-start h-[235px]">
+                            <div key={menu._id} className="bg-white relative rounded-[32px] shadow  flex justify-start h-[235px]">
                                 <img
                                     src={menu.dishImage}
                                     alt={menu.dishname}
