@@ -18,7 +18,7 @@ const SignupForm: React.FC = () => {
       setLoading(false)
       if (response.status === 200) {
         toast.success(response.message);
-        navigate("/login");
+        navigate("/verify-otp" , {state:{email:data.email}});
       } else {
         toast.error(response.response.data.error);
       }

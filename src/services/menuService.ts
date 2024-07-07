@@ -1,6 +1,6 @@
 import { axiosInstance } from "./axios";
 
-export const addMenuItem = async (formData: any,restaurantId:string,  token: string) => {
+export const addMenuItem = async (formData: any, restaurantId: string, token: string) => {
     try {
         const response = await axiosInstance.post(`/menu/items/${restaurantId}`, formData, {
             headers: {

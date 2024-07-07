@@ -1,38 +1,36 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from '../actions/authActions';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaSpinner, FaTimes } from 'react-icons/fa';
-import { login } from '../services/authService';
+import { login, verifyOTP } from '../services/authService';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 
 interface FormData {
   email: string;
-  password: string;
+  otp: string;
 }
 
-const Login: React.FC = () => {
+const VerificationOTP: React.FC = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
+    console.log({ data });
+
     setLoading(true)
     try {
-      const response: any = await login(data);
+      const response: any = await verifyOTP({ email: location?.state?.email, otp: data?.otp });
 
-      console.log({response});
-      
+      console.log({ response });
+
       setLoading(false)
       if (response.status === 200) {
-
-        dispatch(loginSuccess({
-          token: response.data.token,
-          user: response.data.user
-        }));
-        navigate("/");
+        navigate("/login")
       } else {
         toast.error(response.response.data.error);
       }
@@ -59,8 +57,8 @@ const Login: React.FC = () => {
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
           <div className="bg-gray-100 px-4 py-5 sm:px-6 flex justify-between">
             <div>
-              <h2 className="text-2xl font-bold">Log In</h2>
-              <p className='text-sm mt-2 text-[#888888]'>Please sign in to you account below</p>
+              <h2 className="text-2xl font-bold">OTP Verification</h2>
+              <p className='text-sm mt-2 text-[#888888]'>Please verfiy your email by enetrring otp in  below</p>
             </div>
 
             <button className="text-gray-500 hover:text-gray-700 focus:outline-none" aria-label="Close" onClick={() => navigate("/")}>
@@ -75,22 +73,24 @@ const Login: React.FC = () => {
               <input
                 type="email"
                 id="email"
-                {...register("email", { required: true })}
+                disabled
+                // {...register("email", { required: true })}
+                value={location?.state?.email}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               />
-              {errors.email && <p className="text-red-500">Email is required</p>}
+              {/* {errors.email && <p className="text-red-500">Email is required</p>} */}
             </div>
             <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-semibold mb-1 text-[#888888]">
-                Password:
+                OTP:
               </label>
               <input
                 type={showPassword ? "text" : "password"}
                 id="password"
-                {...register("password", { required: true })}
+                {...register("otp", { required: true })}
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
               />
-              {errors.password && <p className="text-red-500">Password is required</p>}
+              {errors.otp && <p className="text-red-500">Password is required</p>}
             </div>
             <div className="mb-4 flex justify-between">
               <div>
@@ -104,7 +104,7 @@ const Login: React.FC = () => {
                 <label htmlFor="show-password" className="text-sm text-[#888888]">Show Password</label>
               </div>
               <Link to="/forgot-password" className="text-sm hover:underline text-[#888888] ">
-                Fortgot password ? 
+                Fortgot password ?
               </Link>
             </div>
             <button
@@ -115,17 +115,19 @@ const Login: React.FC = () => {
                 <FaSpinner className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-spin" />
               )}
               {!loading ? (
-                'Log In'
+                'Verify'
               ) : (
-                <span className="opacity-0">Sign Up</span> // Hide the text when loading
+                <span className="opacity-0"></span> // Hide the text when loading
               )}
             </button>
           </form>
           <p className="mt-4 text-center mb-4">
-            Not having an account  ?
-            <Link to="/signup" className="text-[#FF6D03] hover:underline ml-3">
-              Create Account
-            </Link>
+            Did not get otp  ?
+            <button
+              // onClick={}
+              className="text-[#FF6D03] hover:underline ml-3">
+              Resend OTP
+            </button>
           </p>
         </div>
       </div>
@@ -133,4 +135,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default VerificationOTP;

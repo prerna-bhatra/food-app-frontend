@@ -27,6 +27,7 @@ import Checkout from "./components/Checkout";
 import UserOrders from "./components/UserOrders";
 import ManageOrders from "./components/ManageOrders";
 import Footer from "./components/Footer";
+import VerificationOTP from "./components/VerficationOTP";
 
 
 function App() {
@@ -40,6 +41,9 @@ function App() {
         <Routes>
           <Route element={<WithNavbar />}>
             <Route path="/login" element={<Login />} />
+          </Route>
+          <Route element={<WithNavbar />}>
+            <Route path="/verify-otp" element={<VerificationOTP />} />
           </Route>
           <Route element={<WithNavbar />}>
             <Route path="/signup" element={<SignUpForm />} />

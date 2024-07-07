@@ -47,7 +47,7 @@ const RestaurantPage = () => {
 
 
 
-    const addToCart = (menu: any) => {        
+    const addToCart = (menu: any) => {
         const existingItemIndex = selectedItems.findIndex(item => item._id === menu._id);
 
         if (existingItemIndex !== -1) {
@@ -116,25 +116,24 @@ const RestaurantPage = () => {
             </div>
 
             <div className="mt-8 md:flex rounded-lg">
-                <div className=" md:grid md:gap-6 grid-cols-1 w-[680px] ">
+                <div className="md:grid md:gap-6 grid-cols-1 w-full md:w-[680px]">
                     {menus && menus.length > 0 ? (
                         menus.map((menu: any) => (
-                            <div key={menu._id} className="bg-white relative rounded-[32px] shadow  flex justify-start h-[235px]">
+                            <div key={menu._id} className="bg-white relative rounded-[32px] shadow flex flex-col md:flex-row justify-start h-auto md:h-[235px] mb-4 md:mb-0">
                                 <img
                                     src={menu.dishImage}
                                     alt={menu.dishname}
-                                    className="w-[269px] h-full object-cover mb-4 rounded-tl-lg  rounded-bl-lg rounded"
+                                    className="w-full md:w-[269px] h-[200px] md:h-full object-cover mb-4 md:mb-0 rounded-tl-lg rounded-tr-lg md:rounded-bl-lg md:rounded-tl-lg md:rounded-none"
                                 />
-
                                 <div className='py-6 px-8 flex-grow'>
                                     <div>
                                         <h4 className="text-xl font-bold mb-2 text-left">{capitalizeEachWord(menu.dishname)}</h4>
                                         <div className='flex justify-between'>
-                                            <p className="text-gray-600 mb-2 text-left" >₹{menu.price} for one</p>
+                                            <p className="text-gray-600 mb-2 text-left">₹{menu.price} for one</p>
                                             <img src={"/images/ratings.png"} className='h-6 ml-4 mt-4' />
                                         </div>
                                     </div>
-                                    <div className="absolute bottom-4 right-4">
+                                    <div className="absolute bottom-4 md:right-4 md:relative md:bottom-0 md:right-0">
                                         <button
                                             onClick={() => addToCart(menu)}
                                             className="bg-[#FF6D03] text-white p-4 rounded-[38px]"
@@ -143,7 +142,6 @@ const RestaurantPage = () => {
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         ))
                     ) : (
@@ -151,40 +149,35 @@ const RestaurantPage = () => {
                     )}
                 </div>
 
-                <div className="w-[480px] h-1/4 ml-8  bg-transparent mt-6  ">
+                <div className="w-full md:w-[480px] h-1/4 md:h-auto ml-0 md:ml-8 bg-transparent mt-6 md:mt-0">
                     <div className='w-full'>
-                        <div className='flex space-x-2 justify-between rounde-lg mb-3 shadow py-6 px-8 rounded-lg' >
-                            <div className='flex '>
+                        <div className='flex space-x-2 justify-between rounded-lg mb-3 shadow py-6 px-8'>
+                            <div className='flex'>
                                 <div>
-                                    <p className='font-bold text-base'> Address</p>
+                                    <p className='font-bold text-base'>Address</p>
                                     <img className='w-6' src='/images/loclogo.png' />
                                 </div>
                                 <div className='mx-2'>
-                                    <div className=''>
-                                        {
-                                            checkoutAddress ? (
-                                                <p className='text-left'>
-                                                    {checkoutAddress.houseName + ", "}
-                                                    {checkoutAddress.area}
-                                                    {/* {checkoutAddress.landmark + checkoutAddress.landmark ? ", " : ""} */}
-                                                    {/* {checkoutAddress.googleAddress} */}
-                                                </p>
-                                            ) : (
-                                                <p>No Address Selected</p>
-                                            )
-                                        }
+                                    <div>
+                                        {checkoutAddress ? (
+                                            <p className='text-left'>
+                                                {checkoutAddress.houseName + ", "}
+                                                {checkoutAddress.area}
+                                                {/* {checkoutAddress.landmark + checkoutAddress.landmark ? ", " : ""} */}
+                                                {/* {checkoutAddress.googleAddress} */}
+                                            </p>
+                                        ) : (
+                                            <p>No Address Selected</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
-
                             <button onClick={toggleLocation} className="mb-2">
                                 <img src='/images/dropdown.png' />
                             </button>
                         </div>
-
                         {isLocationOpen && <Location setCheckoutAddress={setCheckoutAddress} />}
                     </div>
-
                     <div className='border mt-2 rounded-lg shadow'>
                         <Cart
                             items={selectedItems}
@@ -196,6 +189,7 @@ const RestaurantPage = () => {
                     </div>
                 </div>
             </div>
+
             <div className="mt-8">
                 {/* <h3 className="text-2xl font-semibold mb-4">Reviews</h3> */}
                 <p className="text-gray-700"> {/* Add review content here */} </p>
